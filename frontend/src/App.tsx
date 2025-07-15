@@ -1,11 +1,17 @@
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import AdvertisementCreate from './pages/AdvertisementCreate';
 import Chat from './pages/Chat';
 import Navbar from './components/Navbar';
+import bridge from '@vkontakte/vk-bridge';
 
 function App() {
+    useEffect(() => {
+        bridge.send('VKWebAppInit');
+    }, []);
+
     return (
         <Router>
             <div className="min-h-screen bg-gray-50">
