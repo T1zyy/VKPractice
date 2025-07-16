@@ -13,25 +13,26 @@ function App() {
     const { setAuth } = useAuthStore();
 
     useEffect(() => {
-        bridge.send('VKWebAppInit');
+        const init = async () => {
+            try {
+                await bridge.send('VKWebAppInit');
 
-        bridge.send('VKWebAppGetAuthToken', {
-            app_id: 53862226,
-            scope: ''
-        });
+                const tokenFromStorage = localStorage.getItem('token');
+                const userInfo = await bridge.send('VKWebAppGetUserInfo');
+                const vkUserId = userInfo.id;
 
-        const handler = async ({ detail: { type } }: any) => {
-            if (type === 'VKWebAppAccessTokenReceived') {
-                const user = await bridge.send('VKWebAppGetUserInfo');
-                const vkUserId = user.id;
+                if (tokenFromStorage) {
+                    setAuth(tokenFromStorage, vkUserId);
+                    return;
+                }
 
                 const profileData = {
                     id: vkUserId,
-                    firstName: user.first_name,
-                    lastName: user.last_name,
-                    city: user.city?.title || 'Не указан',
-                    sex: user.sex === 1 ? 'FEMALE' : 'MALE',
-                    photoUrl: user.photo_200 || '',
+                    firstName: userInfo.first_name,
+                    lastName: userInfo.last_name,
+                    city: userInfo.city?.title || 'Не указан',
+                    sex: userInfo.sex === 1 ? 'FEMALE' : 'MALE',
+                    photoUrl: userInfo.photo_200 || '',
                     balance: 0
                 };
 
@@ -43,18 +44,20 @@ function App() {
                     body: JSON.stringify(profileData)
                 });
 
+                if (!res.ok) {
+                    throw new Error(`Login failed with status ${res.status}`);
+                }
+
                 const token = await res.text();
                 console.log('TOKEN:', token);
                 setAuth(token, vkUserId);
                 localStorage.setItem('token', token);
+            } catch (err) {
+                console.error('Ошибка при инициализации приложения:', err);
             }
         };
 
-        bridge.subscribe(handler);
-
-        return () => {
-            bridge.unsubscribe(handler);
-        };
+        init();
     }, [setAuth]);
 
     return (

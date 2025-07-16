@@ -33,7 +33,7 @@ public class UserEntity {
     private BigDecimal balance;
     @Column(nullable = false)
     private LocalDateTime createdAt;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1024)
     private String photoUrl;
 
     public UserEntity(UserProfile userProfile) {
