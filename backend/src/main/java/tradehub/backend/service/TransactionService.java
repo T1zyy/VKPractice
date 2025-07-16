@@ -18,11 +18,7 @@ public class TransactionService {
 
     @Transactional
     public void newTransaction(IncomeTransaction incomeTransaction) {
-        var transaction = new Transaction();
-        transaction.setAmount(incomeTransaction.getAmount());
-        transaction.setReceiverId(incomeTransaction.getReceiverId());
-        transaction.setSenderId(incomeTransaction.getSenderId());
-        makeTransaction(incomeTransaction);
+        var transaction = new Transaction(incomeTransaction);
         transactionRepository.save(transaction);
     }
 

@@ -8,4 +8,5 @@ public class UserProfile {
     private final String lastName;
     private final String city;
     private final String sex;
+    private final String photoUrl;
 }

@@ -20,4 +20,11 @@ public class Chat {
     private String lastMessage;
     @Column(nullable = false)
     private LocalDateTime lastMessageTime;
+
+    public Chat(Long firstUserId, Long secondUserId) {
+        this.firstUserId = firstUserId;
+        this.secondUserId = secondUserId;
+        this.lastMessageTime = null;
+        this.lastMessage = null;
+    }
 }

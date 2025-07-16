@@ -3,6 +3,8 @@ package tradehub.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tradehub.backend.entity.Chat;
+import tradehub.backend.entity.Message;
+import tradehub.backend.model.CreateChat;
 import tradehub.backend.repository.ChatRepository;
 
 import java.time.LocalDateTime;
@@ -17,14 +19,10 @@ public class ChatService {
         return chatRepository.findChatsSorted(userId);
     }
 
-    public void findOrCreateChat(Chat chat) {
+    public void findOrCreateChat(CreateChat chat) {
         chatRepository.findChatBetweenUsers(chat.getFirstUserId(), chat.getSecondUserId())
                 .orElseGet(() -> {
-                    Chat temp = new Chat();
-                    temp.setFirstUserId(chat.getFirstUserId());
-                    temp.setSecondUserId(chat.getSecondUserId());
-                    temp.setLastMessage("");
-                    temp.setLastMessageTime(LocalDateTime.now());
+                    Chat temp = new Chat(chat.getFirstUserId(), chat.getSecondUserId());
                     return chatRepository.save(temp);
                 });
     }

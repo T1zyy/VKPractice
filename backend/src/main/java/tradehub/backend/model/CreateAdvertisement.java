@@ -11,4 +11,5 @@ public class CreateAdvertisement {
     private BigDecimal price;
     private String address;
     private Float weight;
+    private Category category;
 }

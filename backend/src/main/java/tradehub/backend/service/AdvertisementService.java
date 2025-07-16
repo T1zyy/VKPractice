@@ -13,6 +13,7 @@ import tradehub.backend.repository.AdvertisementRepository;
 import tradehub.backend.util.Mapper;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static tradehub.backend.util.AdvertisementSpecification.*;
 
@@ -37,17 +38,13 @@ public class AdvertisementService {
     }
 
     public ShowAdvertisement createAndSaveAdvertisement(CreateAdvertisement createAdvertisement, long userId) {
-        Advertisement advertisement = new Advertisement();
-        advertisement.setUserId(userId);
-        advertisement.setTitle(createAdvertisement.getTitle());
-        advertisement.setDescription(createAdvertisement.getDescription());
-        advertisement.setPrice(createAdvertisement.getPrice());
-        advertisement.setWeight(createAdvertisement.getWeight());
-        advertisement.setAvailable(false);
-        advertisement.setCreatedAt(LocalDateTime.now());
-        advertisement.setUpdatedAt(LocalDateTime.now());
-        advertisement.setAddress(createAdvertisement.getAddress());
+        Advertisement advertisement = new Advertisement(createAdvertisement, userId);
         advertisementRepository.save(advertisement);
+        return mapper.advertisementToShowAdvertisement(advertisement);
+    }
+
+    public ShowAdvertisement getAdvertisementById(Long advertisementId) {
+        Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(() -> new RuntimeException("Advertisement with id " + advertisementId + " not found"));
         return mapper.advertisementToShowAdvertisement(advertisement);
     }
 }

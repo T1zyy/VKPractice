@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import tradehub.backend.entity.Chat;
 import tradehub.backend.model.ChatMessage;
+import tradehub.backend.model.CreateChat;
 import tradehub.backend.service.ChatService;
 import tradehub.backend.service.MessageService;
 import java.util.List;
@@ -33,7 +34,7 @@ public class ChatController {
     }
 
     @PostMapping("/chat")
-    public Page<ChatMessage> createChat(@Valid @RequestBody Chat chat, Authentication auth) {
+    public Page<ChatMessage> createChat(@Valid @RequestBody CreateChat chat, Authentication auth) {
         long secondUserId = chat.getSecondUserId();
         chatService.findOrCreateChat(chat);
         return getChat(secondUserId, 0, auth);

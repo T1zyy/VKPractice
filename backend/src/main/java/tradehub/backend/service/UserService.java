@@ -26,12 +26,7 @@ public class UserService {
     }
 
     public UserProfile saveUser(UserProfile userProfile) {
-        User user = new User();
-        user.setFirstName(userProfile.getFirstName());
-        user.setLastName(userProfile.getLastName());
-        user.setBalance(BigDecimal.ZERO);
-        user.setCity(userProfile.getCity());
-        user.setSex(Sex.getSexFromString(userProfile.getSex()));
+        User user = new User(userProfile);
         userRepository.save(user);
         return mapper.userToUserProfile(user);
     }

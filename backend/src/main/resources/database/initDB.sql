@@ -17,7 +17,9 @@ CREATE TABLE IF NOT EXISTS advertisements (
     available BOOLEAN NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
-    address TEXT NOT NULL
+    address TEXT NOT NULL,
+    views INTEGER NOT NULL,
+    likes INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS chats (
@@ -42,7 +44,14 @@ CREATE TABLE IF NOT EXISTS transactions (
     id SERIAL PRIMARY KEY,
     sender_id BIGINT NOT NULL REFERENCES users(id),
     receiver_id BIGINT NOT NULL REFERENCES users(id),
-    amount NUMERIC(19, 2) NOT NULL
+    amount NUMERIC(19, 2) NOT NULL,
+    made_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS favourites (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) NOT NULL,
+    advertisement_id INTEGER REFERENCES advertisements(id) NOT NULL
 );
 
 CREATE INDEX idx_advertisements_available ON advertisements(available);

@@ -11,7 +11,7 @@ import tradehub.backend.model.UserProfile;
 @Component
 public class Mapper {
     public UserProfile userToUserProfile(User user) {
-        return new UserProfile(user.getFirstName(), user.getLastName(), user.getCity(), user.getSex().toString());
+        return new UserProfile(user.getFirstName(), user.getLastName(), user.getCity(), user.getSex().toString(), user.getPhotoUrl());
     }
 
     public ChatMessage messageToChatMessage(Message message) {
@@ -32,4 +32,6 @@ public class Mapper {
         message.setChatId(chatMessage.getChatId());
         return message;
     }
+
+
 }
