@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import { useAuthStore } from './store/authStore';
@@ -34,24 +34,22 @@ function App() {
         });
 
         bridge.send('VKWebAppGetAuthToken', {
-            app_id: 53862226, // Заменить на свой app_id
+            app_id: 53862226,
             scope: ''
         });
-    }, []);
+    }, [setAuth]); // Не забудь добавить зависимость!
 
     return (
-        <Router>
-            <div className="min-h-screen bg-gray-50">
-                <Navbar />
-                <Routes>
-                    <Route path="/" element={<Search />} />
-                    <Route path="/profile/:id" element={<Profile />} />
-                    <Route path="/create" element={<AdvertisementCreate />} />
-                    <Route path="/chat/:chatId" element={<Chat />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-            </div>
-        </Router>
+        <div className="min-h-screen bg-gray-50">
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Search />} />
+                <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/create" element={<AdvertisementCreate />} />
+                <Route path="/chat/:chatId" element={<Chat />} />
+                <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+        </div>
     );
 }
 
