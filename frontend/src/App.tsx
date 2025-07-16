@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import { useAuthStore } from './store/authStore';
@@ -30,6 +30,23 @@ function App() {
 
                 const token = await res.text();
                 setAuth(token, vkUserId);
+
+                // Создаем пользователя, если его нет
+                await fetch('https://vkpractice-production.up.railway.app/profile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        id: Number(vkUserId),
+                        firstName: user.first_name,
+                        lastName: user.last_name,
+                        city: user.city?.title || 'Не указан',
+                        sex: user.sex === 1 ? 'FEMALE' : 'MALE',
+                        balance: 0
+                    })
+                });
             }
         });
 
@@ -37,7 +54,7 @@ function App() {
             app_id: 53862226,
             scope: ''
         });
-    }, [setAuth]); // Не забудь добавить зависимость!
+    }, [setAuth]);
 
     return (
         <div className="min-h-screen bg-gray-50">

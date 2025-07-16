@@ -1,14 +1,14 @@
 package tradehub.backend.model;
 
 public enum Sex {
-    Female,
-    Male;
+    FEMALE,
+    MALE;
 
     public static Sex getSexFromString(String sex) {
         if (sex.equalsIgnoreCase("female")) {
-            return Female;
+            return FEMALE;
         } else if (sex.equalsIgnoreCase("male")) {
-            return Male;
+            return MALE;
         }
         return null;
     }
