@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tradehub.backend.entity.Transaction;
-import tradehub.backend.entity.User;
+import tradehub.backend.entity.UserEntity;
 import tradehub.backend.model.IncomeTransaction;
 import tradehub.backend.repository.TransactionRepository;
-
-import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +22,8 @@ public class TransactionService {
 
     @Transactional
     protected void makeTransaction(IncomeTransaction incomeTransaction) {
-        User sender = userService.getUserById(incomeTransaction.getSenderId());
-        User receiver = userService.getUserById(incomeTransaction.getReceiverId());
+        UserEntity sender = userService.getUserById(incomeTransaction.getSenderId());
+        UserEntity receiver = userService.getUserById(incomeTransaction.getReceiverId());
 
         if (sender.getBalance().compareTo(incomeTransaction.getAmount()) < 0) {
             throw new IllegalStateException("Not enough balance");

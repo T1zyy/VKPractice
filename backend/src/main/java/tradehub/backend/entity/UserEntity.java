@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 @Setter
 @Getter
-public class User {
+public class UserEntity {
     @Id
     @Column(nullable = false, unique = true)
     private Long id;
@@ -36,7 +36,7 @@ public class User {
     @Column(nullable = false)
     private String photoUrl;
 
-    public User(UserProfile userProfile) {
+    public UserEntity(UserProfile userProfile) {
         this.photoUrl = userProfile.getPhotoUrl();
         this.balance = BigDecimal.ZERO;
         this.sex = Sex.getSexFromString(userProfile.getSex());

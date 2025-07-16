@@ -3,15 +3,15 @@ package tradehub.backend.util;
 import org.springframework.stereotype.Component;
 import tradehub.backend.entity.Advertisement;
 import tradehub.backend.entity.Message;
-import tradehub.backend.entity.User;
+import tradehub.backend.entity.UserEntity;
 import tradehub.backend.model.ChatMessage;
 import tradehub.backend.model.ShowAdvertisement;
 import tradehub.backend.model.UserProfile;
 
 @Component
 public class Mapper {
-    public UserProfile userToUserProfile(User user) {
-        return new UserProfile(user.getFirstName(), user.getLastName(), user.getCity(), user.getSex().toString(), user.getPhotoUrl());
+    public UserProfile userToUserProfile(UserEntity userEntity) {
+        return new UserProfile(userEntity.getFirstName(), userEntity.getLastName(), userEntity.getCity(), userEntity.getSex().toString(), userEntity.getPhotoUrl());
     }
 
     public ChatMessage messageToChatMessage(Message message) {
