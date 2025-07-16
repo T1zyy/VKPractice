@@ -12,7 +12,7 @@ import java.util.Date;
 @Component
 public class JwtService {
 
-    private final String SECRET_KEY = "very-secret-key-123"; // хранить в .env или config
+    private final String SECRET_KEY = "very-super-secret-key-123456789000000"; // хранить в .env или config
 
     public String generateToken(String userId) {
         return Jwts.builder()
