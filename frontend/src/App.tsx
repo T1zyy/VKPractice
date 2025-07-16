@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import { useAuthStore } from './store/authStore';
@@ -14,8 +14,12 @@ function App() {
 
     useEffect(() => {
         bridge.send('VKWebAppInit');
+        bridge.send('VKWebAppGetAuthToken', {
+            app_id: 53862226,
+            scope: ''
+        });
 
-        bridge.subscribe(async ({ detail: { type, data } }) => {
+        const handler = async ({ detail: { type } }: any) => {
             if (type === 'VKWebAppAccessTokenReceived') {
                 const user = await bridge.send('VKWebAppGetUserInfo');
                 const vkUserId = user.id.toString();
@@ -29,31 +33,36 @@ function App() {
                 });
 
                 const token = await res.text();
+                console.log("TOKEN:", token);
                 setAuth(token, vkUserId);
 
-                // Создаем пользователя, если его нет
-                await fetch('https://vkpractice-production.up.railway.app/profile', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        id: Number(vkUserId),
-                        firstName: user.first_name,
-                        lastName: user.last_name,
-                        city: user.city?.title || 'Не указан',
-                        sex: user.sex === 1 ? 'FEMALE' : 'MALE',
-                        balance: 0
-                    })
-                });
+                try {
+                    await fetch('https://vkpractice-production.up.railway.app/profile', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            id: Number(vkUserId),
+                            firstName: user.first_name,
+                            lastName: user.last_name,
+                            city: user.city?.title || 'Не указан',
+                            sex: user.sex === 1 ? 'FEMALE' : 'MALE',
+                            balance: 0
+                        })
+                    });
+                } catch (e) {
+                    console.warn("Профиль уже существует или ошибка создания", e);
+                }
             }
-        });
+        };
 
-        bridge.send('VKWebAppGetAuthToken', {
-            app_id: 53862226,
-            scope: ''
-        });
+        bridge.subscribe(handler);
+
+        return () => {
+            bridge.unsubscribe(handler);
+        };
     }, [setAuth]);
 
     return (
