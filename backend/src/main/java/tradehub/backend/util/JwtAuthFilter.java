@@ -37,7 +37,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String jwt = authHeader.substring(7);
         String userId = jwtService.extractUserId(jwt);
-
+        System.out.println("HEADER: " + authHeader);
+        System.out.println("JWT: " + jwt);
+        System.out.println("USER ID: " + userId);
         if (userId != null) {
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     userId, null, List.of()
