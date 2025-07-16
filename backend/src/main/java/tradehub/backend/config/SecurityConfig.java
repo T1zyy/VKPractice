@@ -3,6 +3,7 @@ package tradehub.backend.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -27,7 +28,13 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/recommendations/**", "/profile/**", "/advertisement/**", "/search/**").authenticated()
+                        .requestMatchers("/ws/**", "/favourites/**").permitAll() // <-- WebSocket и избранное
+                        .requestMatchers(HttpMethod.GET, "/profile/**").permitAll() // <-- временно открываем
+                        .requestMatchers(
+                                "/recommendations/**",
+                                "/advertisement/**",
+                                "/search/**"
+                        ).authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
