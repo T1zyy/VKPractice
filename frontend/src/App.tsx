@@ -34,7 +34,7 @@ function App() {
                     sex: userInfo.sex === 1 ? 'FEMALE' : 'MALE',
                     photoUrl: userInfo.photo_200 || '',
                     balance: 0,
-                    createdAt: new Date().getTime(),
+                    createdAt: new Date().toISOString()
                 };
 
                 const res = await fetch('https://vkpractice-production.up.railway.app/auth/login', {
