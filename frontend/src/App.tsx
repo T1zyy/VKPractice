@@ -33,7 +33,8 @@ function App() {
                     city: userInfo.city?.title || 'Не указан',
                     sex: userInfo.sex === 1 ? 'FEMALE' : 'MALE',
                     photoUrl: userInfo.photo_200 || '',
-                    balance: 0
+                    balance: 0,
+                    createdAt: new Date().getTime(),
                 };
 
                 const res = await fetch('https://vkpractice-production.up.railway.app/auth/login', {
