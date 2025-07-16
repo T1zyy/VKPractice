@@ -1,13 +1,16 @@
-import React from 'react';
+import { useAuthStore } from '../store/authStore';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+export default function Navbar() {
+    const { userId } = useAuthStore();
+
     return (
-        <nav className="w-full flex justify-between items-center px-4 py-3 bg-white shadow-md">
-            <Link to="/" className="text-xl font-bold text-green-700">AgroHub</Link>
-            <Link to="/profile/me" className="text-sm text-gray-600">Профиль</Link>
+        <nav className="bg-white shadow p-4 flex justify-between">
+            <Link to="/" className="font-bold text-xl text-green-700">AgriTradeHub</Link>
+            <div className="flex gap-4">
+                <Link to="/">Объявления</Link>
+                {userId && <Link to={`/profile/${userId}`}>Профиль</Link>}
+            </div>
         </nav>
     );
-};
-
-export default Navbar;
+}

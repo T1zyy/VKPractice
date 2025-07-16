@@ -22,16 +22,20 @@ export default function Search() {
     return (
         <div className="p-4">
             <h1 className="text-xl font-bold mb-4">Поиск объявлений</h1>
+            <div className="mb-2 text-gray-700">Ключевые слова</div>
             <div className="flex gap-2 mb-4">
                 <input
                     className="border p-2 rounded w-1/3"
-                    placeholder="Что ищем?"
+                    placeholder="Введите ключевые слова"
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
                 />
+            </div>
+            <div className="mb-2 text-gray-700">Адрес</div>
+            <div className="flex gap-2 mb-4">
                 <input
                     className="border p-2 rounded w-1/3"
-                    placeholder="Где ищем?"
+                    placeholder="Введите адрес"
                     value={place}
                     onChange={(e) => setPlace(e.target.value)}
                 />
