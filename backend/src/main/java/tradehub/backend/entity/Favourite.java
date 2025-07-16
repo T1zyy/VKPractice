@@ -3,6 +3,7 @@ package tradehub.backend.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tradehub.backend.model.CreateFavourite;
 
@@ -10,7 +11,8 @@ import tradehub.backend.model.CreateFavourite;
 @Entity
 @Getter
 @Setter
-@Table
+@Table(name = "favourite")
+@NoArgsConstructor
 public class Favourite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

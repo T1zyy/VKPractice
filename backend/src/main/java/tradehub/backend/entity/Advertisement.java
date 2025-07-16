@@ -2,6 +2,9 @@ package tradehub.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tradehub.backend.model.Category;
 import tradehub.backend.model.CreateAdvertisement;
 
@@ -10,7 +13,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table
+@Table(name = "advertisement")
+@NoArgsConstructor
+@Setter
+@Getter
 public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

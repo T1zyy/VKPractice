@@ -2,6 +2,9 @@ package tradehub.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tradehub.backend.model.IncomeTransaction;
 
 import java.math.BigDecimal;
@@ -9,7 +12,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table
+@Table(name = "transaction")
+@NoArgsConstructor
+@Setter
+@Getter
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,6 +2,9 @@ package tradehub.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tradehub.backend.model.Sex;
 import tradehub.backend.model.UserProfile;
 
@@ -10,7 +13,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table
+@Table(name = "user")
+@NoArgsConstructor
+@Setter
+@Getter
 public class User {
     @Id
     @Column(nullable = false, unique = true)

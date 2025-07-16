@@ -2,12 +2,18 @@ package tradehub.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table
+@Table(name = "chat")
+@NoArgsConstructor
+@Setter
+@Getter
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
