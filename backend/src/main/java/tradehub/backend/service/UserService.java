@@ -22,12 +22,6 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public UserProfile saveUser(UserProfile userProfile) {
-        UserEntity userEntity = new UserEntity(userProfile);
-        userRepository.save(userEntity);
-        return mapper.userToUserProfile(userEntity);
-    }
-
     public void saveUser(UserEntity userEntity) {
         userRepository.save(userEntity);
     }

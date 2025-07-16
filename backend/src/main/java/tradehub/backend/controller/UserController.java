@@ -3,6 +3,7 @@ package tradehub.backend.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tradehub.backend.entity.UserEntity;
 import tradehub.backend.model.UserProfile;
 import tradehub.backend.service.UserService;
 
@@ -17,7 +18,7 @@ public class UserController {
     }
 
     @PostMapping("/profile")
-    public UserProfile saveUser(@Valid @RequestBody UserProfile userProfile) {
-        return userService.saveUser(userProfile);
+    public void saveUser(@Valid @RequestBody UserEntity user) {
+        userService.saveUser(user);
     }
 }

@@ -14,6 +14,7 @@ function App() {
 
     useEffect(() => {
         bridge.send('VKWebAppInit');
+
         bridge.send('VKWebAppGetAuthToken', {
             app_id: 53862226,
             scope: ''
@@ -22,39 +23,30 @@ function App() {
         const handler = async ({ detail: { type } }: any) => {
             if (type === 'VKWebAppAccessTokenReceived') {
                 const user = await bridge.send('VKWebAppGetUserInfo');
-                const vkUserId = user.id.toString();
+                const vkUserId = user.id;
+
+                const profileData = {
+                    id: vkUserId,
+                    firstName: user.first_name,
+                    lastName: user.last_name,
+                    city: user.city?.title || 'Не указан',
+                    sex: user.sex === 1 ? 'FEMALE' : 'MALE',
+                    photoUrl: user.photo_200 || '',
+                    balance: 0
+                };
 
                 const res = await fetch('https://vkpractice-production.up.railway.app/auth/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ vk_user_id: vkUserId })
+                    body: JSON.stringify(profileData)
                 });
 
                 const token = await res.text();
-                console.log("TOKEN:", token);
+                console.log('TOKEN:', token);
                 setAuth(token, vkUserId);
-
-                try {
-                    await fetch('https://vkpractice-production.up.railway.app/profile', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            id: Number(vkUserId),
-                            firstName: user.first_name,
-                            lastName: user.last_name,
-                            city: user.city?.title || 'Не указан',
-                            sex: user.sex === 1 ? 'FEMALE' : 'MALE',
-                            balance: 0
-                        })
-                    });
-                } catch (e) {
-                    console.warn("Профиль уже существует или ошибка создания", e);
-                }
+                localStorage.setItem('token', token);
             }
         };
 
