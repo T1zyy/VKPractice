@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
-import AdvertisementCard from '../components/AdvertisementCard';
 
 export default function Search() {
     const [keyword, setKeyword] = useState('');
@@ -16,7 +15,13 @@ export default function Search() {
     };
 
     useEffect(() => {
-        search();
+        if (keyword || place) {
+            search();
+        } else {
+            api.get('/recommendations', { params: { page } })
+                .then(res => setResults(res.data.content))
+                .catch(() => setResults([]));
+        }
     }, [page]);
 
     return (
