@@ -21,35 +21,34 @@ export default function Search() {
 
     return (
         <div className="p-4">
-            <h1 className="text-xl font-bold mb-4">Поиск объявлений</h1>
-            <div className="mb-2 text-gray-700">Ключевые слова</div>
-            <div className="flex gap-2 mb-4">
-                <input
-                    className="border p-2 rounded w-1/3"
-                    placeholder="Введите ключевые слова"
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                />
-            </div>
-            <div className="mb-2 text-gray-700">Адрес</div>
-            <div className="flex gap-2 mb-4">
-                <input
-                    className="border p-2 rounded w-1/3"
-                    placeholder="Введите адрес"
-                    value={place}
-                    onChange={(e) => setPlace(e.target.value)}
-                />
+            <div className="mb-2 text-gray-700 font-medium">Фильтрация</div>
+            <div className="flex flex-wrap items-end gap-4 mb-6">
+                <div className="flex flex-col">
+                    <label htmlFor="keyword" className="text-sm mb-1">Ключевые слова</label>
+                    <input
+                        id="keyword"
+                        className="border p-2 rounded w-60"
+                        placeholder="Введите ключевые слова"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <label htmlFor="place" className="text-sm mb-1">Адрес</label>
+                    <input
+                        id="place"
+                        className="border p-2 rounded w-60"
+                        placeholder="Введите адрес"
+                        value={place}
+                        onChange={(e) => setPlace(e.target.value)}
+                    />
+                </div>
                 <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    className="bg-blue-500 text-white px-6 py-2 rounded h-[42px]"
                     onClick={search}
                 >
                     Поиск
                 </button>
-            </div>
-            <div className="grid gap-4">
-                {results.map(ad => (
-                    <AdvertisementCard key={ad.id} ad={ad} />
-                ))}
             </div>
         </div>
     );
