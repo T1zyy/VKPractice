@@ -12,7 +12,7 @@ export default function Profile() {
     }, [id]);
 
     if (!profile) return <p className="p-4">Загрузка профиля...</p>;
-
+    console.log(profile.photoUrl);
     return (
         <div className="p-4 max-w-xl mx-auto">
             <h1 className="text-xl font-bold mb-4">Профиль пользователя</h1>
