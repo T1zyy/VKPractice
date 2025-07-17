@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import bridge from '@vkontakte/vk-bridge';
 import api from '../api/axios';
 
 export default function LoginButton() {
@@ -7,17 +8,30 @@ export default function LoginButton() {
 
     const login = async () => {
         try {
-            const res = await api.post('/auth/login', {
-                vkUserId: '1' // ← временный id
-            });
-            const { token, userId } = res.data;
+            // Инициализация VK Bridge и получение информации о пользователе
+            await bridge.send('VKWebAppInit');
+            const user = await bridge.send('VKWebAppGetUserInfo');
 
-            // сохраняем токен в браузере
+            const profileData = {
+                id: user.id,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                city: user.city?.title || 'Не указан',
+                sex: user.sex === 1 ? 'FEMALE' : 'MALE',
+                photoUrl: user.photo_200 || '',
+                balance: 0,
+                createdAt: new Date().toISOString(), // ISO формат для LocalDateTime
+            };
+
+            const res = await api.post('/auth/login', profileData);
+            const token = res.data;
+
             localStorage.setItem('token', token);
-            localStorage.setItem('userId', userId);
+            localStorage.setItem('userId', user.id);
 
-            setUserId(userId);
+            setUserId(user.id.toString());
             setLoggedIn(true);
+
             console.log('Авторизация прошла успешно');
         } catch (err) {
             console.error('Ошибка входа:', err);
@@ -33,7 +47,7 @@ export default function LoginButton() {
 
     const testProtected = async () => {
         try {
-            const res = await api.get('/chat'); // пример защищённого запроса
+            const res = await api.get('/chat');
             console.log('Ответ с сервера:', res.data);
         } catch (err) {
             console.error('Ошибка запроса:', err);
@@ -54,7 +68,7 @@ export default function LoginButton() {
                 </>
             ) : (
                 <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={login}>
-                    Войти (vkUserId: 12345)
+                    Войти через VK
                 </button>
             )}
         </div>

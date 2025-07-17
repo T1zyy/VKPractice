@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 export default function Navbar() {
     const { userId } = useAuthStore();
-    console.log(userId)
     return (
         <nav className="bg-white shadow p-4 flex justify-between items-center">
             <Link to="/" className="font-bold text-xl text-green-700">AgriTradeHub</Link>

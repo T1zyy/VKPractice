@@ -50,7 +50,6 @@ function App() {
                 }
 
                 const token = await res.text();
-                console.log('TOKEN:', token);
                 setAuth(token, vkUserId);
                 localStorage.setItem('token', token);
             } catch (err) {
