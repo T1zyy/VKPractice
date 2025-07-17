@@ -11,33 +11,26 @@ export default function Profile() {
         api.get(`/profile/${id}`).then(res => setProfile(res.data));
     }, [id]);
 
-    if (!profile) return <p className="p-4">Загрузка профиля...</p>;
-    console.log(profile.photoUrl);
-    return (
-        <div className="p-4 max-w-xl mx-auto">
-            <h1 className="text-xl font-bold mb-4">Профиль пользователя</h1>
+    if (!profile) return <p className="p-4 text-lg">Загрузка профиля...</p>;
 
-            <div className="flex gap-4 items-start">
+    return (
+        <div className="p-6 max-w-4xl mx-auto">
+            <h1 className="text-3xl font-bold mb-8">Профиль пользователя</h1>
+
+            <div className="flex items-start gap-10">
                 <img
                     src={profile.photoUrl}
                     alt="Фото пользователя"
-                    className="w-24 h-24 rounded-full object-cover border"
+                    className="w-40 h-40 rounded-full object-cover border shadow-md"
                 />
 
-                <div>
+                <div className="text-lg space-y-3">
                     <p><strong>Имя:</strong> {profile.firstName} {profile.lastName}</p>
                     <p><strong>Город:</strong> {profile.city}</p>
                     <p><strong>Пол:</strong> {profile.sex === 'MALE' ? 'Мужской' : 'Женский'}</p>
                     <p><strong>Баланс:</strong> {profile.balance} ₽</p>
                 </div>
             </div>
-
-            <button
-                onClick={() => navigate('/')}
-                className="mt-6 bg-blue-500 text-white px-4 py-2 rounded"
-            >
-                Назад к объявлениям
-            </button>
         </div>
     );
 }
