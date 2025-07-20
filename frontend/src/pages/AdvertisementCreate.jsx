@@ -6,11 +6,31 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAuthStore } from '../store/authStore';
 
 const categories = [
-    'GRAINS', 'OIL_CROPS', 'VEGETABLES', 'FRUITS_BERRIES', 'GREENS', 'SEEDS',
-    'CATTLE', 'SMALL_LIVESTOCK', 'POULTRY', 'PIGS', 'FEED',
-    'FERTILIZERS', 'PLANT_PROTECTION',
-    'DAIRY', 'MEAT', 'EGGS', 'HONEY', 'GRAIN_PRODUCTS', 'GARDEN_PRODUCE',
-    'OTHERS'
+    { value: 'GRAINS', label: 'Зерновые культуры' },
+    { value: 'OIL_CROPS', label: 'Масличные культуры' },
+    { value: 'VEGETABLES', label: 'Овощи' },
+    { value: 'FRUITS_BERRIES', label: 'Фрукты и ягоды' },
+    { value: 'GREENS', label: 'Зелень' },
+    { value: 'SEEDS', label: 'Семена' },
+
+    { value: 'CATTLE', label: 'Крупный рогатый скот' },
+    { value: 'SMALL_LIVESTOCK', label: 'Мелкий скот' },
+    { value: 'POULTRY', label: 'Птица' },
+    { value: 'PIGS', label: 'Свиньи' },
+    { value: 'FEED', label: 'Корма' },
+
+    { value: 'FERTILIZERS', label: 'Удобрения' },
+    { value: 'PLANT_PROTECTION', label: 'Средства защиты растений' },
+
+    { value: 'DAIRY', label: 'Молочная продукция' },
+    { value: 'MEAT', label: 'Мясо' },
+    { value: 'EGGS', label: 'Яйца' },
+    { value: 'HONEY', label: 'Мёд' },
+    { value: 'GRAIN_PRODUCTS', label: 'Зерновая продукция' },
+    { value: 'GARDEN_PRODUCE', label: 'Садовая продукция' },
+
+    { value: 'OTHERS', label: 'Другое' },
+    { value: 'SERVICES', label: 'Услуги' }
 ];
 
 export default function AdvertisementCreate() {
@@ -53,6 +73,8 @@ export default function AdvertisementCreate() {
             toast.success('Объявление успешно создано!');
             setTimeout(() => navigate(`/profile/${userId}`), 1000);
         } catch (err) {
+            console.log('Ошибка:', err);
+            console.log('Ответ сервера:', err.response); // важно!
             toast.error('Ошибка при создании объявления');
         }
     };
