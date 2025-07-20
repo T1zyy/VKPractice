@@ -1,5 +1,6 @@
 package tradehub.backend.config;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,5 +25,10 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("[CORS] CorsConfig loaded");
     }
 }
