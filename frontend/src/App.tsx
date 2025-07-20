@@ -18,12 +18,13 @@ function App() {
             try {
                 await bridge.send('VKWebAppInit');
 
-                const tokenFromStorage = localStorage.getItem('token');
+                const accessTokenFromStorage = localStorage.getItem('accessToken');
+                const refreshTokenFromStorage = localStorage.getItem('refreshToken');
                 const userInfo = await bridge.send('VKWebAppGetUserInfo');
                 const vkUserId = userInfo.id;
 
-                if (tokenFromStorage) {
-                    setAuth(tokenFromStorage, vkUserId);
+                if (accessTokenFromStorage && refreshTokenFromStorage) {
+                    setAuth(accessTokenFromStorage, refreshTokenFromStorage, vkUserId);
                     return;
                 }
 
@@ -48,11 +49,11 @@ function App() {
 
                 if (!res.ok) {
                     console.error(`Login failed with status ${res.status}`);
+                    return;
                 }
 
-                const token = await res.text();
-                setAuth(token, vkUserId);
-                localStorage.setItem('token', token);
+                const { accessToken, refreshToken } = await res.json();
+                setAuth(accessToken, refreshToken, vkUserId);
             } catch (err) {
                 console.error('Ошибка при инициализации приложения:', err);
             }
