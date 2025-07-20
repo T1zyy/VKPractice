@@ -8,19 +8,34 @@ export default function Search() {
     const [page, setPage] = useState(0);
 
     const search = async () => {
-        const res = await api.get('/search', {
-            params: { keyword, place, page }
-        });
-        setResults(res.data.content);
+        try {
+            const res = await api.get('/search', {
+                params: { keyword, place, page }
+            });
+            console.log('Search response:', res.data);
+            setResults(res.data?.content ?? []);
+        } catch (e) {
+            console.error('Search failed:', e);
+            setResults([]);
+        }
     };
 
     useEffect(() => {
+        const loadRecommendations = async () => {
+            try {
+                const res = await api.get('/recommendations', { params: { page } });
+                console.log('Recommendations response:', res.data);
+                setResults(res.data?.content ?? []);
+            } catch (e) {
+                console.error('Recommendations failed:', e);
+                setResults([]);
+            }
+        };
+
         if (keyword || place) {
             search();
         } else {
-            api.get('/recommendations', { params: { page } })
-                .then(res => setResults(res.data.content))
-                .catch(() => setResults([]));
+            loadRecommendations();
         }
     }, [page]);
 
@@ -55,16 +70,21 @@ export default function Search() {
                     Поиск
                 </button>
             </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {results.map((ad, index) => (
-                    <div key={index} className="border rounded p-4 bg-white shadow">
-                        <h3 className="text-lg font-semibold mb-2">{ad.title}</h3>
-                        <p className="text-sm text-gray-700 mb-1">Цена: {ad.price} ₽</p>
-                        <p className="text-sm text-gray-700 mb-1">Вес: {ad.weight} кг</p>
-                        <p className="text-sm text-gray-700 mb-1">Адрес: {ad.address}</p>
-                        <p className="text-sm text-gray-500">{ad.description}</p>
-                    </div>
-                ))}
+                {Array.isArray(results) && results.length > 0 ? (
+                    results.map((ad, index) => (
+                        <div key={index} className="border rounded p-4 bg-white shadow">
+                            <h3 className="text-lg font-semibold mb-2">{ad.title}</h3>
+                            <p className="text-sm text-gray-700 mb-1">Цена: {ad.price} ₽</p>
+                            <p className="text-sm text-gray-700 mb-1">Вес: {ad.weight} кг</p>
+                            <p className="text-sm text-gray-700 mb-1">Адрес: {ad.address}</p>
+                            <p className="text-sm text-gray-500">{ad.description}</p>
+                        </div>
+                    ))
+                ) : (
+                    <div className="text-gray-500 col-span-full">Нет объявлений</div>
+                )}
             </div>
         </div>
     );
