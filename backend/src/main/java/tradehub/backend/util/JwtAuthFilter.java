@@ -52,5 +52,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+        System.out.println("[JwtFilter] Authorization: " + request.getHeader("Authorization"));
+        System.out.println("[JwtFilter] User ID: " + userId);
+        System.out.println("[JwtFilter] Auth set? " + (SecurityContextHolder.getContext().getAuthentication() != null));
     }
 }
