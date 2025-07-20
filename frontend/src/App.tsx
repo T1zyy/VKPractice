@@ -8,6 +8,7 @@ import Search from './pages/Search';
 import Profile from './pages/Profile';
 import AdvertisementCreate from './pages/AdvertisementCreate';
 import Chat from './pages/Chat';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
     const { setAuth } = useAuthStore();
@@ -46,7 +47,7 @@ function App() {
                 });
 
                 if (!res.ok) {
-                    throw new Error(`Login failed with status ${res.status}`);
+                    console.error(`Login failed with status ${res.status}`);
                 }
 
                 const token = await res.text();
@@ -70,6 +71,7 @@ function App() {
                 <Route path="/chat/:chatId" element={<Chat />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
+            <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 }

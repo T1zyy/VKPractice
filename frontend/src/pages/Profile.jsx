@@ -6,9 +6,11 @@ export default function Profile() {
     const { id } = useParams();
     const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
+    const [ads, setAds] = useState([]);
 
     useEffect(() => {
         api.get(`/profile/${id}`).then(res => setProfile(res.data));
+        api.get(`/profile/${id}/advertisements`).then(res => setAds(res.data));
     }, [id]);
 
     if (!profile) return <p className="p-4 text-lg">Загрузка профиля...</p>;
@@ -31,6 +33,18 @@ export default function Profile() {
                     <p><strong>Баланс:</strong> {profile.balance} ₽</p>
                 </div>
             </div>
+
+            <h2 className="text-lg font-bold mt-6 mb-2">Объявления пользователя</h2>
+            <div className="grid gap-4">
+                {ads.map(ad => (
+                    <div key={ad.id} className="p-4 border rounded shadow">
+                        <h3 className="font-semibold">{ad.title}</h3>
+                        <p>{ad.description}</p>
+                        <p className="text-green-600 font-bold">{ad.price} ₽</p>
+                    </div>
+                ))}
+            </div>
         </div>
+
     );
 }
