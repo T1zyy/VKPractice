@@ -27,8 +27,8 @@ public class AdvertisementController {
     @GetMapping("/search")
     public PagedModel<EntityModel<ShowAdvertisement>> getSearchedAdvertisements(
             @RequestParam int page,
-            @RequestParam String keyword,
-            @RequestParam String place) {
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "") String place) {
         return assembler.toModel(advertisementService.getSearchedPage(page, keyword, place));
     }
 
