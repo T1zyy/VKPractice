@@ -35,8 +35,7 @@ public class AdvertisementService {
     public Page<ShowAdvertisement> getSearchedPage(int page, String keyword, String place) {
         Pageable pageable = PageRequest.of(page, 30);
         Specification<Advertisement> spec = Specification.allOf(hasPlace(place))
-                .and(hasKeyword(keyword))
-                .and(isAvailable(true));
+                .and(hasKeyword(keyword));
         Page<Advertisement> advertisements = advertisementRepository.findAll(spec, pageable);
         return advertisements.map(mapper::advertisementToShowAdvertisement);
     }
