@@ -32,7 +32,6 @@ public class SecurityConfig {
                         .requestMatchers("/ws/**", "/favourites/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/profile/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/recommendations/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/profile/**/advertisements").permitAll()
                         .requestMatchers(HttpMethod.GET, "/advertisement/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/advertisement").permitAll()
                         .anyRequest().authenticated()
