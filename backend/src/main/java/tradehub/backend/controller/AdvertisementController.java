@@ -14,7 +14,6 @@ import tradehub.backend.service.AdvertisementService;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://agri-trade-hub.netlify.app")
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
     private final PagedResourcesAssembler<ShowAdvertisement> assembler;

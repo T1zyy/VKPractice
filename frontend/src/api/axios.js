@@ -3,8 +3,8 @@ import { useAuthStore } from '../store/authStore';
 
 const api = axios.create({
     baseURL: 'https://vkpractice-production.up.railway.app',
+    withCredentials: true,
 });
-
 let isRefreshing = false;
 let failedQueue = [];
 
