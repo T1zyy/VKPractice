@@ -19,9 +19,16 @@ public class Mapper {
     }
 
     public ShowAdvertisement advertisementToShowAdvertisement(Advertisement advertisement) {
-        return new ShowAdvertisement(advertisement.getTitle(), advertisement.getDescription(), advertisement.getPrice(), advertisement.getWeight(), advertisement.getAddress());
-    }
+        System.out.println("[Mapper] Mapping advertisement id=" + advertisement.getId());
 
+        return new ShowAdvertisement(
+                advertisement.getTitle(),
+                advertisement.getDescription(),
+                advertisement.getPrice(),
+                advertisement.getWeight(),
+                advertisement.getAddress()
+        );
+    }
     public Message chatMessageToMessage(ChatMessage chatMessage) {
         var message = new Message();
         message.setText(chatMessage.getText());

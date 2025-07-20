@@ -26,9 +26,12 @@ public class AdvertisementService {
 
     public Page<ShowAdvertisement> getRecommendedPage(int page) {
         Pageable pageable = PageRequest.of(page, 30);
-        return advertisementRepository.findAll(pageable).map(mapper::advertisementToShowAdvertisement);
-    }
+        Page<Advertisement> pageOfAds = advertisementRepository.findAll(pageable);
 
+        System.out.println("[Service] Loaded " + pageOfAds.getContent().size() + " advertisements");
+
+        return pageOfAds.map(mapper::advertisementToShowAdvertisement);
+    }
     public Page<ShowAdvertisement> getSearchedPage(int page, String keyword, String place) {
         Pageable pageable = PageRequest.of(page, 30);
         Specification<Advertisement> spec = Specification.allOf(hasPlace(place))
