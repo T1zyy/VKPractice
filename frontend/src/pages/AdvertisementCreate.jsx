@@ -33,6 +33,8 @@ const categories = [
     { value: 'SERVICES', label: 'Услуги' }
 ];
 
+const { userId } = useAuthStore();
+
 export default function AdvertisementCreate() {
     const [form, setForm] = useState({
         title: '',
@@ -44,7 +46,6 @@ export default function AdvertisementCreate() {
     });
 
     const navigate = useNavigate();
-    const { userId } = useAuthStore();
 
     const handleChange = (e) => {
         setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
