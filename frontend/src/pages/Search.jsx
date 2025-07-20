@@ -55,6 +55,17 @@ export default function Search() {
                     Поиск
                 </button>
             </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {results.map((ad, index) => (
+                    <div key={index} className="border rounded p-4 bg-white shadow">
+                        <h3 className="text-lg font-semibold mb-2">{ad.title}</h3>
+                        <p className="text-sm text-gray-700 mb-1">Цена: {ad.price} ₽</p>
+                        <p className="text-sm text-gray-700 mb-1">Вес: {ad.weight} кг</p>
+                        <p className="text-sm text-gray-700 mb-1">Адрес: {ad.address}</p>
+                        <p className="text-sm text-gray-500">{ad.description}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
