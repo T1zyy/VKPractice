@@ -1,9 +1,13 @@
 package tradehub.backend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateFavourite {
-    private final Long userId;
-    private final Long advertisementId;
+    private Long userId;
+    private Long advertisementId;
 }

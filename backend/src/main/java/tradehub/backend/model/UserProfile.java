@@ -1,12 +1,16 @@
 package tradehub.backend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserProfile {
-    private final String firstName;
-    private final String lastName;
-    private final String city;
-    private final String sex;
-    private final String photoUrl;
+    private String firstName;
+    private String lastName;
+    private String city;
+    private String sex;
+    private String photoUrl;
 }

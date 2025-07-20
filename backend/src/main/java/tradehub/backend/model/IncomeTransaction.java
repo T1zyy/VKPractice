@@ -1,12 +1,16 @@
 package tradehub.backend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class IncomeTransaction {
-    private final Long senderId;
-    private final Long receiverId;
-    private final BigDecimal amount;
+    private Long senderId;
+    private Long receiverId;
+    private BigDecimal amount;
 }
