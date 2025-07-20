@@ -4,13 +4,18 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tradehub.backend.entity.UserEntity;
+import tradehub.backend.model.ShowAdvertisement;
 import tradehub.backend.model.UserProfile;
+import tradehub.backend.service.AdvertisementService;
 import tradehub.backend.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final AdvertisementService advertisementService;
 
     @GetMapping("/profile/{userId}")
     public UserProfile getUserProfile(@PathVariable Long userId) {
@@ -20,5 +25,10 @@ public class UserController {
     @PostMapping("/profile")
     public void saveUser(@Valid @RequestBody UserEntity user) {
         userService.saveUser(user);
+    }
+
+    @GetMapping("/profile/{id}/advertisements")
+    public List<ShowAdvertisement> getUserAds(@PathVariable Long id) {
+        return advertisementService.getAdvertisementsByUserId(id);
     }
 }

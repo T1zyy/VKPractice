@@ -14,6 +14,7 @@ import tradehub.backend.util.Mapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static tradehub.backend.util.AdvertisementSpecification.*;
 
@@ -46,5 +47,10 @@ public class AdvertisementService {
     public ShowAdvertisement getAdvertisementById(Long advertisementId) {
         Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(() -> new RuntimeException("Advertisement with id " + advertisementId + " not found"));
         return mapper.advertisementToShowAdvertisement(advertisement);
+    }
+
+    public List<ShowAdvertisement> getAdvertisementsByUserId(Long userId) {
+        List<Advertisement> advertisements = advertisementRepository.findAllByUserId(userId);
+        return advertisements.stream().map(mapper::advertisementToShowAdvertisement).toList();
     }
 }

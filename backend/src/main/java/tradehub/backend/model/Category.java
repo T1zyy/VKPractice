@@ -29,5 +29,6 @@ public enum Category {
     GARDEN_PRODUCE,
 
     // Другое
-    OTHERS
+    OTHERS,
+    SERVICES
 }

@@ -31,7 +31,9 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/ws/**", "/favourites/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/profile/**").permitAll()
-                        .requestMatchers("/recommendations/**", "/advertisement/**", "/search/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/recommendations/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/profile/**/advertisements").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/advertisement/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
