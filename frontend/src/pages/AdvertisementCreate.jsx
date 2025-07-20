@@ -98,7 +98,7 @@ export default function AdvertisementCreate() {
                     className="border p-3 rounded w-full"
                 >
                     {categories.map(cat => (
-                        <option key={cat} value={cat}>{cat.replaceAll('_', ' ')}</option>
+                        <option key={cat.value} value={cat.value}>{cat.label}</option>
                     ))}
                 </select>
 

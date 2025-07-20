@@ -2,7 +2,9 @@ package tradehub.backend.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import tradehub.backend.entity.Advertisement;
@@ -14,18 +16,18 @@ import tradehub.backend.service.AdvertisementService;
 @RequiredArgsConstructor
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
-
+    private PagedResourcesAssembler<ShowAdvertisement> assembler;
     @GetMapping("/recommendations")
-    public Page<Advertisement> getRecommendedAdvertisements(@RequestParam int page) {
-        return advertisementService.getRecommendedPage(page);
+    public PagedModel<EntityModel<ShowAdvertisement>> getRecommendedAdvertisements(@RequestParam int page) {
+        return assembler.toModel(advertisementService.getRecommendedPage(page));
     }
 
     @GetMapping("/search")
-    public Page<ShowAdvertisement> getSearchedAdvertisements(
+    public PagedModel<EntityModel<ShowAdvertisement>> getSearchedAdvertisements(
             @RequestParam int page,
             @RequestParam String keyword,
             @RequestParam String place) {
-        return advertisementService.getSearchedPage(page, keyword, place);
+        return assembler.toModel(advertisementService.getSearchedPage(page, keyword, place));
     }
 
     @PostMapping("/advertisement")

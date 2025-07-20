@@ -24,9 +24,9 @@ public class AdvertisementService {
     private final AdvertisementRepository advertisementRepository;
     private final Mapper mapper;
 
-    public Page<Advertisement> getRecommendedPage(int page) {
+    public Page<ShowAdvertisement> getRecommendedPage(int page) {
         Pageable pageable = PageRequest.of(page, 30);
-        return advertisementRepository.findAll(pageable);
+        return advertisementRepository.findAll(pageable).map(mapper::advertisementToShowAdvertisement);
     }
 
     public Page<ShowAdvertisement> getSearchedPage(int page, String keyword, String place) {
