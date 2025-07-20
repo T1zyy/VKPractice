@@ -16,7 +16,8 @@ import tradehub.backend.service.AdvertisementService;
 @RequiredArgsConstructor
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
-    private PagedResourcesAssembler<ShowAdvertisement> assembler;
+    private final PagedResourcesAssembler<ShowAdvertisement> assembler;
+
     @GetMapping("/recommendations")
     public PagedModel<EntityModel<ShowAdvertisement>> getRecommendedAdvertisements(@RequestParam int page) {
         return assembler.toModel(advertisementService.getRecommendedPage(page));
@@ -33,6 +34,7 @@ public class AdvertisementController {
     @PostMapping("/advertisement")
     public ShowAdvertisement addAdvertisement(@Valid @RequestBody CreateAdvertisement advertisement, Authentication auth) {
         long userId = Long.parseLong((String) auth.getPrincipal());
+        System.out.println("Создание объявления от userId=" + userId + " => " + advertisement);
         return advertisementService.createAndSaveAdvertisement(advertisement, userId);
     }
 }
