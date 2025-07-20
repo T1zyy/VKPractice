@@ -26,9 +26,4 @@ public class CorsConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
-    @PostConstruct
-    public void init() {
-        System.out.println("[CORS] CorsConfig loaded");
-    }
 }
