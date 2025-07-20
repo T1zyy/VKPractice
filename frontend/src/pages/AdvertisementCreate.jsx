@@ -33,9 +33,10 @@ const categories = [
     { value: 'SERVICES', label: 'Услуги' }
 ];
 
-const { userId } = useAuthStore();
 
 export default function AdvertisementCreate() {
+    const { userId } = useAuthStore();
+
     const [form, setForm] = useState({
         title: '',
         description: '',
