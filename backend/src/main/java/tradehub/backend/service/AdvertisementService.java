@@ -28,6 +28,7 @@ public class AdvertisementService {
         Page<Advertisement> pageOfAds = advertisementRepository.findAll(pageable);
         return pageOfAds.map(mapper::advertisementToShowLentAdvertisement);
     }
+
     public Page<ShowLentAdvertisement> getSearchedPage(int page, String keyword, String place) {
         Pageable pageable = PageRequest.of(page, 30);
         Specification<Advertisement> spec = Specification.allOf(hasPlace(place))
