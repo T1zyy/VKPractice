@@ -46,8 +46,9 @@ public class TransactionService {
 
     @Transactional
     protected void makeReplenishment(Replenishment replenishment) {
+        System.out.println("Пополнение баланса для пользователя: " + replenishment.getUserId());
         UserEntity user = userService.getUserById(replenishment.getUserId());
-        user.setBalance(user.getBalance().subtract(replenishment.getAmount()));
+        user.setBalance(user.getBalance().add(replenishment.getAmount()));
         userService.saveUser(user);
     }
 }

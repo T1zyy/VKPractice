@@ -17,7 +17,7 @@ export default function BalancePage() {
 
         try {
             await api.post('/replenishment', {
-                profileId: userId,
+                userId: userId,
                 amount: value
             });
 
