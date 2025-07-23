@@ -21,6 +21,7 @@ public class Mapper {
 
     public ShowLentAdvertisement advertisementToShowLentAdvertisement(Advertisement advertisement) {
         return new ShowLentAdvertisement(
+                advertisement.getId(),
                 advertisement.getTitle(),
                 advertisement.getPrice(),
                 advertisement.getWeight(),
