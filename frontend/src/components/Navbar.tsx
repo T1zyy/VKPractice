@@ -20,9 +20,6 @@ export default function Navbar() {
                     to="/" className="text-gray-700 hover:text-green-700">Объявления
                 </Link>
 
-                import Balance from './Balance';
-
-
                 <div className="flex gap-4 items-center">
                     <Balance />
                     {userId && (
@@ -34,17 +31,6 @@ export default function Navbar() {
                         </Link>
                     )}
                 </div>
-
-                {
-                    userId && (
-                    <Link
-                        to={`/profile/${userId}`}
-                        className="text-gray-700 hover:text-green-700"
-                    >
-                        Профиль
-                    </Link>
-                    )
-                }
             </div>
         </nav>
     );
