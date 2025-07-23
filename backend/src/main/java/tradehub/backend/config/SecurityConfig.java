@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/advertisement/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/advertisement").permitAll()
                         .requestMatchers(HttpMethod.POST, "/replenishment").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/user/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

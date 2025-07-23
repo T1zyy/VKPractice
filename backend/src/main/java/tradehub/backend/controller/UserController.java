@@ -31,4 +31,9 @@ public class UserController {
     public List<ShowLentAdvertisement> getUserAds(@PathVariable Long id) {
         return advertisementService.getAdvertisementsByUserId(id);
     }
+
+    @GetMapping("/user/{userId}")
+    public UserEntity getUser(@PathVariable Long userId) {
+        return userService.getUserById(userId);
+    }
 }

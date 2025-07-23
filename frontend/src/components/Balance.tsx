@@ -10,7 +10,7 @@ export default function Balance() {
 
     useEffect(() => {
         if (userId) {
-            api.get(`/profile/${userId}`)
+            api.get(`/user/${userId}`)
                 .then(res => setBalance(res.data.balance))
                 .catch(err => {
                     console.error('Failed to fetch balance:', err);
