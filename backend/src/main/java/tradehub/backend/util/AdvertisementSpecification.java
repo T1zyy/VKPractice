@@ -21,7 +21,7 @@ public class AdvertisementSpecification {
     public static Specification<Advertisement> hasPlace(String place) {
         return (root, query, cb) -> {
             if (place == null || place.trim().isEmpty()) {
-                return cb.conjunction(); // не фильтруем
+                return cb.conjunction();
             }
             String pattern = "%" + place.trim().toLowerCase() + "%";
             return cb.like(cb.lower(root.get("address")), pattern);

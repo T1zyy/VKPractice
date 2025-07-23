@@ -5,7 +5,7 @@ export default function Search() {
     const [keyword, setKeyword] = useState('');
     const [place, setPlace] = useState('');
     const [results, setResults] = useState([]);
-    const [page, setPage] = useState(0);
+    const [page] = useState(0);
 
     const search = async () => {
         try {
@@ -13,7 +13,7 @@ export default function Search() {
                 params: { keyword, place, page }
             });
             console.log('Search response:', res.data);
-            setResults(res.data?.content ?? []);
+            setResults(res.data?._embedded?.showAdvertisementList ?? []);
         } catch (e) {
             console.error('Search failed:', e);
             setResults([]);
@@ -25,7 +25,7 @@ export default function Search() {
             try {
                 const res = await api.get('/recommendations', { params: { page } });
                 console.log('Recommendations response:', res.data);
-                setResults(res.data?.content ?? []);
+                setResults(res.data?._embedded?.showAdvertisementList ?? []);
             } catch (e) {
                 console.error('Recommendations failed:', e);
                 setResults([]);
@@ -72,7 +72,7 @@ export default function Search() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {Array.isArray(results) && results.length > 0 ? (
+                {results.length > 0 ? (
                     results.map((ad, index) => (
                         <div key={index} className="border rounded p-4 bg-white shadow">
                             <h3 className="text-lg font-semibold mb-2">{ad.title}</h3>
