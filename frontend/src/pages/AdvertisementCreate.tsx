@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuthStore } from '../store/authStore';
+import axios from "axios";
 
 const categories = [
     { value: 'GRAINS', label: 'Зерновые культуры' },
@@ -48,10 +49,9 @@ export default function AdvertisementCreate() {
 
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
-
     const validateForm = () => {
         if (!form.title.trim()) return 'Введите заголовок';
         if (!form.description.trim()) return 'Введите описание';
@@ -61,7 +61,7 @@ export default function AdvertisementCreate() {
         return null;
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const error = validateForm();
         if (error) return toast.error(error);
@@ -75,8 +75,12 @@ export default function AdvertisementCreate() {
             toast.success('Объявление успешно создано!');
             setTimeout(() => navigate(`/profile/${userId}`), 1000);
         } catch (err) {
-            console.log('Ошибка:', err);
-            console.log('Ответ сервера:', err.response); // важно!
+            if (axios.isAxiosError(err)) {
+                console.log('Ошибка:', err);
+                console.log('Ответ сервера:', err.response);
+            } else {
+                console.log('Неизвестная ошибка:', err);
+            }
             toast.error('Ошибка при создании объявления');
         }
     };
