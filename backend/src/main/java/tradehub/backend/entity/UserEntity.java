@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tradehub.backend.model.util.Sex;
 import tradehub.backend.model.user.UserProfile;
+import tradehub.backend.util.SexConverter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class UserEntity {
     private String lastName;
     @Column(nullable = false)
     private String city;
+    @Convert(converter = SexConverter.class)
     @Column(nullable = false)
     private Sex sex;
     @Column(nullable = false)

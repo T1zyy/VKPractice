@@ -18,6 +18,7 @@ export default function Search() {
 
             const res = await api.get<SearchResponse>(endpoint, { params });
             const ads = res.data?._embedded?.showAdvertisementList ?? [];
+            console.log(ads);
             setResults(ads);
         } catch (e) {
             console.error('Ошибка при загрузке объявлений:', e);
