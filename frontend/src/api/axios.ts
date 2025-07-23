@@ -1,14 +1,20 @@
-import axios from 'axios';
+import axios, {AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import { useAuthStore } from '../store/authStore';
 
-const api = axios.create({
+const api: AxiosInstance = axios.create({
     baseURL: 'https://vkpractice-production.up.railway.app',
     withCredentials: true,
 });
-let isRefreshing = false;
-let failedQueue = [];
 
-const processQueue = (error, token = null) => {
+type FailedRequest = {
+    resolve: (token: string | null) => void;
+    reject: (error: unknown) => void;
+};
+
+let isRefreshing = false;
+let failedQueue: FailedRequest[] = [];
+
+const processQueue = (error: unknown, token: string | null = null) => {
     failedQueue.forEach(prom => {
         if (error) {
             prom.reject(error);
@@ -19,10 +25,11 @@ const processQueue = (error, token = null) => {
     failedQueue = [];
 };
 
+// Интерцептор ответов — для обработки 403 и обновления токена
 api.interceptors.response.use(
-    res => res,
+    (res: AxiosResponse) => res,
     async err => {
-        const originalRequest = err.config;
+        const originalRequest: any = err.config;
         const { refreshToken, setTokens } = useAuthStore.getState();
 
         if (err.response?.status === 403 && !originalRequest._retry) {
@@ -50,7 +57,7 @@ api.interceptors.response.use(
                 );
 
                 const newAccess = res.data.accessToken;
-                const newRefresh = res.data.refreshToken; // если не приходит — убери
+                const newRefresh = res.data.refreshToken;
 
                 setTokens(newAccess, newRefresh);
                 originalRequest.headers.Authorization = `Bearer ${newAccess}`;
@@ -68,10 +75,10 @@ api.interceptors.response.use(
     }
 );
 
-api.interceptors.request.use(config => {
+api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = useAuthStore.getState().accessToken;
     if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.set('Authorization', `Bearer ${token}`);
     }
     return config;
 });
