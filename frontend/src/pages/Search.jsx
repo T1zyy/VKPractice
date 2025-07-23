@@ -7,6 +7,7 @@ export default function Search() {
     const [place, setPlace] = useState('');
     const [results, setResults] = useState([]);
     const [page] = useState(0);
+    const [SearchResponse] = useState()
 
     const search = async () => {
         try {
@@ -24,7 +25,7 @@ export default function Search() {
     useEffect(() => {
         const loadRecommendations = async () => {
             try {
-                const res = await api.get('/recommendations', { params: { page } });
+                const res = await api.get<SearchResponse>('/recommendations', { params: { page } });
                 console.log('Recommendations response:', res.data);
                 setResults(res.data?._embedded?.showAdvertisementList ?? []);
             } catch (e) {
