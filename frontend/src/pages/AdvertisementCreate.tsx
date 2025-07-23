@@ -38,11 +38,20 @@ const categories = [
 export default function AdvertisementCreate() {
     const { userId } = useAuthStore();
 
-    const [form, setForm] = useState({
+    interface AdvertisementForm {
+        title: string;
+        description: string;
+        price: number;
+        weight: number;
+        address: string;
+        category: string;
+    }
+
+    const [form, setForm] = useState<AdvertisementForm>({
         title: '',
         description: '',
-        price: '',
-        weight: '',
+        price: 0,
+        weight: 0,
         address: '',
         category: 'OTHERS',
     });
@@ -50,13 +59,18 @@ export default function AdvertisementCreate() {
     const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+        const { name, value } = e.target;
+        setForm(prev => ({
+            ...prev,
+            [name]: name === 'price' || name === 'weight' ? Number(value) : value
+        }));
     };
+
     const validateForm = () => {
         if (!form.title.trim()) return 'Введите заголовок';
         if (!form.description.trim()) return 'Введите описание';
-        if (!form.price || isNaN(form.price) || parseFloat(form.price) <= 0) return 'Введите корректную цену';
-        if (!form.weight || isNaN(form.weight) || parseFloat(form.weight) <= 0) return 'Введите корректный вес';
+        if (!form.price || isNaN(form.price) || form.price <= 0) return 'Введите корректную цену';
+        if (!form.weight || isNaN(form.weight) || form.weight <= 0) return 'Введите корректный вес';
         if (!form.address.trim()) return 'Введите адрес';
         return null;
     };
@@ -69,8 +83,8 @@ export default function AdvertisementCreate() {
         try {
             await api.post('/advertisement', {
                 ...form,
-                price: parseFloat(form.price),
-                weight: parseFloat(form.weight)
+                price: form.price,
+                weight: form.weight
             });
             toast.success('Объявление успешно создано!');
             setTimeout(() => navigate(`/profile/${userId}`), 1000);

@@ -19,7 +19,7 @@ export interface SearchResponse {
     _links?: any;
 }
 
-export interface AdvertisementPage {
+export interface PageAdvertisement {
     id: number;
     title: string;
     description: string;

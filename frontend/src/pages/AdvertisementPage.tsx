@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../api/axios';
-import {AdvertisementPage} from "../hateoas/interfaces";
+import {PageAdvertisement} from "../hateoas/interfaces";
 
 export default function AdvertisementPage() {
     const { advertisementId } = useParams();
-    const [ad, setAd] = useState<AdvertisementPage | null>(null);
+    const [ad, setAd] = useState<PageAdvertisement | null>(null);
 
     useEffect(() => {
         api.get(`/advertisement/${advertisementId}`)
