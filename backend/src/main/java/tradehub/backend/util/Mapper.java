@@ -4,9 +4,10 @@ import org.springframework.stereotype.Component;
 import tradehub.backend.entity.Advertisement;
 import tradehub.backend.entity.Message;
 import tradehub.backend.entity.UserEntity;
-import tradehub.backend.model.ChatMessage;
-import tradehub.backend.model.ShowAdvertisement;
-import tradehub.backend.model.UserProfile;
+import tradehub.backend.model.message.ChatMessage;
+import tradehub.backend.model.advertisement.ShowLentAdvertisement;
+import tradehub.backend.model.advertisement.ShowPageAdvertisement;
+import tradehub.backend.model.user.UserProfile;
 
 @Component
 public class Mapper {
@@ -18,10 +19,16 @@ public class Mapper {
         return new ChatMessage(message.getText(), message.getSenderId(), message.getRecipientId(), message.getChatId(), message.getCreatedAt(), message.getRead());
     }
 
-    public ShowAdvertisement advertisementToShowAdvertisement(Advertisement advertisement) {
-        System.out.println("[Mapper] Mapping advertisement id=" + advertisement.getId());
-
-        return new ShowAdvertisement(
+    public ShowLentAdvertisement advertisementToShowLentAdvertisement(Advertisement advertisement) {
+        return new ShowLentAdvertisement(
+                advertisement.getTitle(),
+                advertisement.getPrice(),
+                advertisement.getWeight(),
+                advertisement.getAddress()
+        );
+    }
+    public ShowPageAdvertisement advertisementToShowPageAdvertisement(Advertisement advertisement) {
+        return new ShowPageAdvertisement(
                 advertisement.getTitle(),
                 advertisement.getDescription(),
                 advertisement.getPrice(),
@@ -29,6 +36,7 @@ public class Mapper {
                 advertisement.getAddress()
         );
     }
+
     public Message chatMessageToMessage(ChatMessage chatMessage) {
         var message = new Message();
         message.setText(chatMessage.getText());

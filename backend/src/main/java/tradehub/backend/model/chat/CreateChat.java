@@ -1,4 +1,4 @@
-package tradehub.backend.model;
+package tradehub.backend.model.chat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

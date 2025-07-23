@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tradehub.backend.model.CreateFavourite;
+import tradehub.backend.model.advertisement.CreateFavouriteAdvertisement;
 
 @Data
 @Entity
@@ -22,7 +22,7 @@ public class Favourite {
     @Column(nullable = false)
     private Long advertisementId;
 
-    public Favourite(CreateFavourite createFavourite) {
+    public Favourite(CreateFavouriteAdvertisement createFavourite) {
         this.userId = createFavourite.getUserId();
         this.advertisementId = createFavourite.getAdvertisementId();
         this.id = null;

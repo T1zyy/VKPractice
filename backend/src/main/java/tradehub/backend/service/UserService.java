@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tradehub.backend.util.Mapper;
 import tradehub.backend.entity.UserEntity;
-import tradehub.backend.model.UserProfile;
+import tradehub.backend.model.user.UserProfile;
 import tradehub.backend.repository.UserRepository;
 
 @Service

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
+import {Link} from 'react-router-dom';
 
 export default function Search() {
     const [keyword, setKeyword] = useState('');
@@ -75,11 +76,12 @@ export default function Search() {
                 {results.length > 0 ? (
                     results.map((ad, index) => (
                         <div key={index} className="border rounded p-4 bg-white shadow">
-                            <h3 className="text-lg font-semibold mb-2">{ad.title}</h3>
+                            <Link to={`/advertisement/${ad.id}`} className="text-lg font-semibold mb-2 text-blue-600 hover:underline">
+                                {ad.title}
+                            </Link>
                             <p className="text-sm text-gray-700 mb-1">Цена: {ad.price} ₽</p>
                             <p className="text-sm text-gray-700 mb-1">Вес: {ad.weight} кг</p>
                             <p className="text-sm text-gray-700 mb-1">Адрес: {ad.address}</p>
-                            <p className="text-sm text-gray-500">{ad.description}</p>
                         </div>
                     ))
                 ) : (

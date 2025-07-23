@@ -7,14 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import tradehub.backend.entity.Advertisement;
-import tradehub.backend.model.CreateAdvertisement;
-import tradehub.backend.model.ShowAdvertisement;
+import tradehub.backend.model.advertisement.CreateAdvertisement;
+import tradehub.backend.model.advertisement.ShowLentAdvertisement;
+import tradehub.backend.model.advertisement.ShowPageAdvertisement;
 import tradehub.backend.repository.AdvertisementRepository;
 import tradehub.backend.util.Mapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static tradehub.backend.util.AdvertisementSpecification.*;
 
@@ -24,32 +23,37 @@ public class AdvertisementService {
     private final AdvertisementRepository advertisementRepository;
     private final Mapper mapper;
 
-    public Page<ShowAdvertisement> getRecommendedPage(int page) {
+    public Page<ShowLentAdvertisement> getRecommendedPage(int page) {
         Pageable pageable = PageRequest.of(page, 30);
         Page<Advertisement> pageOfAds = advertisementRepository.findAll(pageable);
-        return pageOfAds.map(mapper::advertisementToShowAdvertisement);
+        return pageOfAds.map(mapper::advertisementToShowLentAdvertisement);
     }
-    public Page<ShowAdvertisement> getSearchedPage(int page, String keyword, String place) {
+    public Page<ShowLentAdvertisement> getSearchedPage(int page, String keyword, String place) {
         Pageable pageable = PageRequest.of(page, 30);
         Specification<Advertisement> spec = Specification.allOf(hasPlace(place))
                 .and(hasKeyword(keyword));
         Page<Advertisement> advertisements = advertisementRepository.findAll(spec, pageable);
-        return advertisements.map(mapper::advertisementToShowAdvertisement);
+        return advertisements.map(mapper::advertisementToShowLentAdvertisement);
     }
 
-    public ShowAdvertisement createAndSaveAdvertisement(CreateAdvertisement createAdvertisement, long userId) {
+    public ShowLentAdvertisement createAndSaveAdvertisement(CreateAdvertisement createAdvertisement, long userId) {
         Advertisement advertisement = new Advertisement(createAdvertisement, userId);
         advertisementRepository.save(advertisement);
-        return mapper.advertisementToShowAdvertisement(advertisement);
+        return mapper.advertisementToShowLentAdvertisement(advertisement);
     }
 
-    public ShowAdvertisement getAdvertisementById(Long advertisementId) {
+    public ShowLentAdvertisement getAdvertisementByIdListed(Long advertisementId) {
         Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(() -> new RuntimeException("Advertisement with id " + advertisementId + " not found"));
-        return mapper.advertisementToShowAdvertisement(advertisement);
+        return mapper.advertisementToShowLentAdvertisement(advertisement);
     }
 
-    public List<ShowAdvertisement> getAdvertisementsByUserId(Long userId) {
+    public ShowPageAdvertisement getAdvertisementByIdPaged(Long advertisementId) {
+        Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(() -> new RuntimeException("Advertisement with id " + advertisementId + " not found"));
+        return mapper.advertisementToShowPageAdvertisement(advertisement);
+    }
+
+    public List<ShowLentAdvertisement> getAdvertisementsByUserId(Long userId) {
         List<Advertisement> advertisements = advertisementRepository.findAllByUserId(userId);
-        return advertisements.stream().map(mapper::advertisementToShowAdvertisement).toList();
+        return advertisements.stream().map(mapper::advertisementToShowLentAdvertisement).toList();
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tradehub.backend.entity.Transaction;
 import tradehub.backend.entity.UserEntity;
-import tradehub.backend.model.IncomeTransaction;
+import tradehub.backend.model.transaction.IncomeTransaction;
 import tradehub.backend.repository.TransactionRepository;
 
 @Service

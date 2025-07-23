@@ -4,8 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tradehub.backend.entity.UserEntity;
-import tradehub.backend.model.ShowAdvertisement;
-import tradehub.backend.model.UserProfile;
+import tradehub.backend.model.advertisement.ShowLentAdvertisement;
+import tradehub.backend.model.user.UserProfile;
 import tradehub.backend.service.AdvertisementService;
 import tradehub.backend.service.UserService;
 
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/profile/{id}/advertisements")
-    public List<ShowAdvertisement> getUserAds(@PathVariable Long id) {
+    public List<ShowLentAdvertisement> getUserAds(@PathVariable Long id) {
         return advertisementService.getAdvertisementsByUserId(id);
     }
 }

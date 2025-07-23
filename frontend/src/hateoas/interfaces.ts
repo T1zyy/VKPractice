@@ -1,7 +1,6 @@
-export interface Advertisement {
+export interface AdvertisementList {
     id: number;
     title: string;
-    description: string;
     price: number;
     weight: number;
     address: string;
@@ -9,7 +8,7 @@ export interface Advertisement {
 
 export interface SearchResponse {
     _embedded?: {
-        showAdvertisementList: Advertisement[];
+        showAdvertisementList: AdvertisementList[];
     };
     page?: {
         size: number;
@@ -18,4 +17,13 @@ export interface SearchResponse {
         number: number;
     };
     _links?: any;
+}
+
+export interface AdvertisementPage {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    weight: number;
+    address: string;
 }

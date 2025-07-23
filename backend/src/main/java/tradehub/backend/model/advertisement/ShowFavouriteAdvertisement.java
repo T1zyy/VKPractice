@@ -1,4 +1,4 @@
-package tradehub.backend.model;
+package tradehub.backend.model.advertisement;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,10 +17,9 @@ public class ShowFavouriteAdvertisement {
     private Float weight;
     private String address;
 
-    public ShowFavouriteAdvertisement(ShowAdvertisement showAdvertisement, Long favouriteId) {
+    public ShowFavouriteAdvertisement(ShowLentAdvertisement showAdvertisement, Long favouriteId) {
         this.favouriteId = favouriteId;
         this.title = showAdvertisement.getTitle();
-        this.description = showAdvertisement.getDescription();
         this.price = showAdvertisement.getPrice();
         this.weight = showAdvertisement.getWeight();
         this.address = showAdvertisement.getAddress();

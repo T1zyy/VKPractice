@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tradehub.backend.model.Category;
-import tradehub.backend.model.CreateAdvertisement;
+import tradehub.backend.model.util.Category;
+import tradehub.backend.model.advertisement.CreateAdvertisement;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

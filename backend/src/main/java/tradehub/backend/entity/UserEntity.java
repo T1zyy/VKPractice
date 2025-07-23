@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tradehub.backend.model.Sex;
-import tradehub.backend.model.UserProfile;
+import tradehub.backend.model.util.Sex;
+import tradehub.backend.model.user.UserProfile;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -6,9 +6,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import tradehub.backend.model.ChatMessage;
-import tradehub.backend.model.ReadStatusMessage;
-import tradehub.backend.model.TypingMessage;
+import tradehub.backend.model.message.ChatMessage;
+import tradehub.backend.model.message.ReadStatusMessage;
+import tradehub.backend.model.message.TypingMessage;
 import tradehub.backend.service.ChatService;
 import tradehub.backend.service.MessageService;
 

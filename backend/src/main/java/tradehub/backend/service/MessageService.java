@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tradehub.backend.entity.Message;
-import tradehub.backend.model.ChatMessage;
+import tradehub.backend.model.message.ChatMessage;
 import tradehub.backend.repository.MessageRepository;
 import tradehub.backend.util.Mapper;
 import tradehub.backend.util.MessageSpecification;

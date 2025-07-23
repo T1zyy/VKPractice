@@ -6,9 +6,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tradehub.backend.entity.Favourite;
-import tradehub.backend.model.CreateFavourite;
-import tradehub.backend.model.ShowAdvertisement;
-import tradehub.backend.model.ShowFavouriteAdvertisement;
+import tradehub.backend.model.advertisement.CreateFavouriteAdvertisement;
+import tradehub.backend.model.advertisement.ShowLentAdvertisement;
+import tradehub.backend.model.advertisement.ShowFavouriteAdvertisement;
 import tradehub.backend.repository.FavouriteRepository;
 import tradehub.backend.util.Mapper;
 
@@ -24,12 +24,12 @@ public class FavouriteService {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         Page<Favourite> favourites = favouriteRepository.getFavouritesByUserId(userId, pageable);
         return favourites.map(favourite -> {
-            ShowAdvertisement show = advertisementService.getAdvertisementById(favourite.getAdvertisementId());
+            ShowLentAdvertisement show = advertisementService.getAdvertisementByIdListed(favourite.getAdvertisementId());
             return new ShowFavouriteAdvertisement(show, favourite.getId());
         });
     }
 
-    public void addFavourite(CreateFavourite createFavourite) {
+    public void addFavourite(CreateFavouriteAdvertisement createFavourite) {
         Favourite favourite = new Favourite(createFavourite);
         favouriteRepository.save(favourite);
     }

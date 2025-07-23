@@ -1,4 +1,4 @@
-package tradehub.backend.model;
+package tradehub.backend.model.util;
 
 public enum Sex {
     FEMALE,

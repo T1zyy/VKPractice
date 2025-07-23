@@ -3,8 +3,7 @@ package tradehub.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tradehub.backend.entity.Chat;
-import tradehub.backend.entity.Message;
-import tradehub.backend.model.CreateChat;
+import tradehub.backend.model.chat.CreateChat;
 import tradehub.backend.repository.ChatRepository;
 
 import java.time.LocalDateTime;
