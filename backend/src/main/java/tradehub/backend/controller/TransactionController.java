@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import tradehub.backend.model.transaction.IncomeTransaction;
+import tradehub.backend.model.transaction.Replenishment;
 import tradehub.backend.service.TransactionService;
 
 @RestController
@@ -16,5 +17,10 @@ public class TransactionController {
     @PostMapping("/transaction")
     public void makeTransaction(@Valid @RequestBody IncomeTransaction transaction) {
         transactionService.newTransaction(transaction);
+    }
+
+    @PostMapping("/replenishment")
+    public void replenishTransaction(@Valid @RequestBody Replenishment replenishment) {
+        transactionService.newReplenishment(replenishment);
     }
 }

@@ -1,5 +1,6 @@
 import { useAuthStore } from '../store/authStore';
 import { Link } from 'react-router-dom';
+import Balance from "../components/Balance";
 
 export default function Navbar() {
     const { userId } = useAuthStore();
@@ -18,6 +19,21 @@ export default function Navbar() {
                 <Link
                     to="/" className="text-gray-700 hover:text-green-700">Объявления
                 </Link>
+
+                import Balance from './Balance';
+
+
+                <div className="flex gap-4 items-center">
+                    <Balance />
+                    {userId && (
+                        <Link
+                            to={`/profile/${userId}`}
+                            className="text-gray-700 hover:text-green-700"
+                        >
+                            Профиль
+                        </Link>
+                    )}
+                </div>
 
                 {
                     userId && (

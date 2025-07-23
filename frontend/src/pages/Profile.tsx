@@ -1,16 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import api from '../api/axios';
 
+interface Advertisement {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+}
+
+interface UserProfile {
+    firstName: string;
+    lastName: string;
+    city: string;
+    sex: 'MALE' | 'FEMALE';
+    photoUrl: string;
+}
+
 export default function Profile() {
-    const { id } = useParams();
-    const [profile, setProfile] = useState(null);
-    const navigate = useNavigate();
-    const [ads, setAds] = useState([]);
+    const { id } = useParams<{ id: string }>();
+    const [profile, setProfile] = useState<UserProfile | null>(null);
+    const [ads, setAds] = useState<Advertisement[]>([]);
 
     useEffect(() => {
-        api.get(`/profile/${id}`).then(res => setProfile(res.data));
-        api.get(`/profile/${id}/advertisements`).then(res => setAds(res.data));
+        if (!id) return;
+
+        api.get<UserProfile>(`/profile/${id}`).then(res => setProfile(res.data));
+        api.get<Advertisement[]>(`/profile/${id}/advertisements`).then(res => setAds(res.data));
     }, [id]);
 
     if (!profile) return <p className="p-4 text-lg">Загрузка профиля...</p>;
@@ -30,7 +46,6 @@ export default function Profile() {
                     <p><strong>Имя:</strong> {profile.firstName} {profile.lastName}</p>
                     <p><strong>Город:</strong> {profile.city}</p>
                     <p><strong>Пол:</strong> {profile.sex === 'MALE' ? 'Мужской' : 'Женский'}</p>
-                    <p><strong>Баланс:</strong> {profile.balance} ₽</p>
                 </div>
             </div>
 
@@ -45,6 +60,5 @@ export default function Profile() {
                 ))}
             </div>
         </div>
-
     );
 }

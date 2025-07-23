@@ -10,6 +10,7 @@ import AdvertisementCreate from './pages/AdvertisementCreate';
 import Chat from './pages/Chat';
 import { ToastContainer } from 'react-toastify';
 import AdvertisementPage from "./pages/AdvertisementPage";
+import BalancePage from "./pages/BalancePage";
 
 function App() {
     const { setAuth } = useAuthStore();
@@ -73,6 +74,7 @@ function App() {
                 <Route path="/chat/:chatId" element={<Chat />} />
                 <Route path="*" element={<Navigate to="/" />} />
                 <Route path="/advertisement/:advertisementId" element={<AdvertisementPage />} />
+                <Route path="/balance" element={<BalancePage />} />
             </Routes>
             <ToastContainer position="top-right" autoClose={3000} />
         </div>

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tradehub.backend.entity.Transaction;
 import tradehub.backend.entity.UserEntity;
 import tradehub.backend.model.transaction.IncomeTransaction;
+import tradehub.backend.model.transaction.Replenishment;
 import tradehub.backend.repository.TransactionRepository;
 
 @Service
@@ -16,6 +17,7 @@ public class TransactionService {
 
     @Transactional
     public void newTransaction(IncomeTransaction incomeTransaction) {
+        makeTransaction(incomeTransaction);
         var transaction = new Transaction(incomeTransaction);
         transactionRepository.save(transaction);
     }
@@ -33,5 +35,19 @@ public class TransactionService {
         receiver.setBalance(receiver.getBalance().add(incomeTransaction.getAmount()));
         userService.saveUser(sender);
         userService.saveUser(receiver);
+    }
+
+    @Transactional
+    public void newReplenishment(Replenishment replenishment) {
+        makeReplenishment(replenishment);
+        var transaction = new Transaction(replenishment);
+        transactionRepository.save(transaction);
+    }
+
+    @Transactional
+    protected void makeReplenishment(Replenishment replenishment) {
+        UserEntity user = userService.getUserById(replenishment.getUserId());
+        user.setBalance(user.getBalance().subtract(replenishment.getAmount()));
+        userService.saveUser(user);
     }
 }

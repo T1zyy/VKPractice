@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tradehub.backend.model.advertisement.CreateAdvertisement;
 import tradehub.backend.model.transaction.IncomeTransaction;
+import tradehub.backend.model.transaction.Replenishment;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -34,5 +36,12 @@ public class Transaction {
         this.receiverId = incomeTransaction.getReceiverId();
         this.amount = incomeTransaction.getAmount();
         this.madeAt = LocalDateTime.now();
+    }
+
+    public Transaction(Replenishment replenishment) {
+        this.receiverId = replenishment.getUserId();
+        this.amount = replenishment.getAmount();
+        this.madeAt = LocalDateTime.now();
+        this.senderId = replenishment.getUserId();
     }
 }
