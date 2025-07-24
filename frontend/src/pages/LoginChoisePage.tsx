@@ -18,9 +18,7 @@ export default function LoginChoicePage() {
                 lastName: userInfo.last_name,
                 city: userInfo.city?.title || 'Не указан',
                 sex: userInfo.sex === 1 ? 'FEMALE' : 'MALE',
-                photoUrl: userInfo.photo_200 || '',
-                balance: 0,
-                createdAt: new Date().toISOString(),
+                photoUrl: userInfo.photo_200 || ''
             };
 
             console.log(profileData);
