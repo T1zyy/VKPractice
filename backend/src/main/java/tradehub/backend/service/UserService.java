@@ -2,11 +2,13 @@ package tradehub.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import tradehub.backend.model.user.CreateUser;
 import tradehub.backend.util.Mapper;
 import tradehub.backend.entity.UserEntity;
 import tradehub.backend.model.user.UserProfile;
 import tradehub.backend.repository.UserRepository;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -28,7 +30,20 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public void saveUser(UserEntity userEntity) {
-        userRepository.save(userEntity);
+    public void saveUser(CreateUser user) {
+        var temp = new UserEntity(user);
+        userRepository.save(temp);
+    }
+
+    public void saveUser(UserEntity user) {
+        userRepository.save(user);
+    }
+
+    public boolean hasProfileChanged(UserEntity existing, UserEntity incoming) {
+        return !Objects.equals(existing.getFirstName(), incoming.getFirstName()) ||
+                !Objects.equals(existing.getLastName(), incoming.getLastName()) ||
+                !Objects.equals(existing.getPhotoUrl(), incoming.getPhotoUrl()) ||
+                !Objects.equals(existing.getCity(), incoming.getCity()) ||
+                !Objects.equals(existing.getSex(), incoming.getSex());
     }
 }

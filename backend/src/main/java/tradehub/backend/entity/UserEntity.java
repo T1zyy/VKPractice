@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tradehub.backend.model.user.CreateUser;
 import tradehub.backend.model.util.Sex;
 import tradehub.backend.model.user.UserProfile;
 import tradehub.backend.util.SexConverter;
@@ -38,13 +39,14 @@ public class UserEntity {
     @Column(nullable = false, length = 1024)
     private String photoUrl;
 
-    public UserEntity(UserProfile userProfile) {
-        this.photoUrl = userProfile.getPhotoUrl();
+    public UserEntity(CreateUser createUser) {
+        this.photoUrl = createUser.getPhotoUrl();
         this.balance = BigDecimal.ZERO;
-        this.sex = Sex.getSexFromString(userProfile.getSex());
-        this.city = userProfile.getCity();
+        this.city = createUser.getCity();
         this.createdAt = LocalDateTime.now();
-        this.firstName = userProfile.getFirstName();
-        this.lastName = userProfile.getLastName();
+        this.firstName = createUser.getFirstName();
+        this.lastName = createUser.getLastName();
+        this.sex = Sex.getSexFromString(createUser.getSex());
+        this.id = createUser.getId();
     }
 }

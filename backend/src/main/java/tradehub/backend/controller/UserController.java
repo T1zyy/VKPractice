@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tradehub.backend.entity.UserEntity;
 import tradehub.backend.model.advertisement.ShowLentAdvertisement;
+import tradehub.backend.model.user.CreateUser;
 import tradehub.backend.model.user.UserProfile;
 import tradehub.backend.service.AdvertisementService;
 import tradehub.backend.service.UserService;
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/profile")
-    public void saveUser(@Valid @RequestBody UserEntity user) {
+    public void saveUser(@Valid @RequestBody CreateUser user) {
         userService.saveUser(user);
     }
 
