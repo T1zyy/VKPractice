@@ -1,6 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useAuthStore } from './store/authStore';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 
 import Search from './pages/Search';
@@ -11,24 +9,13 @@ import { ToastContainer } from 'react-toastify';
 import AdvertisementPage from './pages/AdvertisementPage';
 import BalancePage from './pages/BalancePage';
 import LoginChoicePage from "./pages/LoginChoisePage";
+import AuthInitializer from "./api/AuthInitializer";
+
+
 function App() {
-    const { setAuth } = useAuthStore();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const accessToken = localStorage.getItem('accessToken');
-        const refreshToken = localStorage.getItem('refreshToken');
-        const userId = localStorage.getItem('userId');
-
-        if (accessToken && refreshToken && userId) {
-            setAuth(accessToken, refreshToken, Number(userId));
-        } else {
-            navigate('/');
-        }
-    }, []);
-
     return (
         <div className="min-h-screen bg-gray-50">
+            <AuthInitializer />
             <Navbar />
             <Routes>
                 <Route path="/search" element={<Search />} />
@@ -44,5 +31,4 @@ function App() {
         </div>
     );
 }
-
 export default App;
