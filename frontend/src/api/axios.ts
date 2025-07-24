@@ -63,7 +63,16 @@ api.interceptors.response.use(
                 originalRequest.headers.Authorization = `Bearer ${newAccess}`;
                 processQueue(null, newAccess);
                 return api(originalRequest);
-            } catch (refreshErr) {
+            } catch (refreshErr: any) {
+                if (
+                    refreshErr.response?.status === 403 &&
+                    refreshErr.response?.data?.message?.includes('User not found')
+                ) {
+                    localStorage.removeItem('accessToken');
+                    localStorage.removeItem('refreshToken');
+                    useAuthStore.getState().logout?.();
+                    window.location.reload();
+                }
                 processQueue(refreshErr, null);
                 return Promise.reject(refreshErr);
             } finally {
