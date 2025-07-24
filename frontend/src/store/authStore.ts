@@ -1,11 +1,21 @@
 import { create } from 'zustand';
 
-export const useAuthStore = create((set) => ({
-    accessToken: localStorage.getItem('accessToken') || null,
-    refreshToken: localStorage.getItem('refreshToken') || null,
-    userId: localStorage.getItem('userId') || null,
+interface AuthState {
+    accessToken: string | null;
+    refreshToken: string | null;
+    userId: number | null;
 
-    setTokens: (accessToken, refreshToken) => {
+    setTokens: (accessToken: string, refreshToken: string) => void;
+    setAuth: (accessToken: string, refreshToken: string, userId: number) => void;
+    logout: () => void;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+        accessToken: localStorage.getItem('accessToken'),
+        refreshToken: localStorage.getItem('refreshToken'),
+        userId: localStorage.getItem('userId') ? +localStorage.getItem('userId')! : null,
+
+        setTokens: (accessToken, refreshToken) => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         set({ accessToken, refreshToken });
@@ -14,7 +24,7 @@ export const useAuthStore = create((set) => ({
     setAuth: (accessToken, refreshToken, userId) => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
-        localStorage.setItem('userId', userId);
+        localStorage.setItem('userId', userId.toString());
         set({ accessToken, refreshToken, userId });
     },
 

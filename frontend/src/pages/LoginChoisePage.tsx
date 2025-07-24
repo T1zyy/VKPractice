@@ -25,44 +25,28 @@ export default function LoginChoicePage() {
 
             const res = await fetch('https://vkpractice-production.up.railway.app/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(profileData),
             });
 
-            if (!res.ok) {
-                console.error(`Login failed with status ${res.status}`);
-                return;
-            }
+            if (!res.ok) throw new Error('Login failed');
 
             const { accessToken, refreshToken } = await res.json();
-
-            localStorage.setItem('vkUserId', vkUserId.toString());
-
+            localStorage.setItem('userId', vkUserId.toString());
             setAuth(accessToken, refreshToken, vkUserId);
-            navigate('/');
-        } catch (error) {
-            console.error('Ошибка авторизации:', error);
+            navigate('/search');
+        } catch (err) {
+            console.error('Ошибка авторизации:', err);
         }
-    };
-    const handleSkipLogin = () => {
-        navigate('/');
     };
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center gap-6 bg-gray-100 p-4">
             <h1 className="text-2xl font-bold text-green-700">Добро пожаловать в AgriTradeHub</h1>
-            <button
-                onClick={handleLogin}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded text-lg"
-            >
+            <button onClick={handleLogin} className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded text-lg">
                 Войти через VK
             </button>
-            <button
-                onClick={handleSkipLogin}
-                className="bg-gray-400 hover:bg-gray-500 text-white px-6 py-3 rounded text-lg"
-            >
+            <button onClick={() => navigate('/search')} className="bg-gray-400 hover:bg-gray-500 text-white px-6 py-3 rounded text-lg">
                 Продолжить без входа
             </button>
         </div>

@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
+import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from '../store/authStore';
 
 const api: AxiosInstance = axios.create({
@@ -16,21 +16,17 @@ let failedQueue: FailedRequest[] = [];
 
 const processQueue = (error: unknown, token: string | null = null) => {
     failedQueue.forEach(prom => {
-        if (error) {
-            prom.reject(error);
-        } else {
-            prom.resolve(token);
-        }
+        if (error) prom.reject(error);
+        else prom.resolve(token);
     });
     failedQueue = [];
 };
 
-// Интерцептор ответов — для обработки 403 и обновления токена
 api.interceptors.response.use(
     (res: AxiosResponse) => res,
     async err => {
         const originalRequest: any = err.config;
-        const { refreshToken, setTokens } = useAuthStore.getState();
+        const { refreshToken, setTokens, logout } = useAuthStore.getState();
 
         if (err.response?.status === 403 && !originalRequest._retry) {
             if (isRefreshing) {
@@ -49,29 +45,18 @@ api.interceptors.response.use(
                 const res = await axios.post(
                     'https://vkpractice-production.up.railway.app/auth/refresh',
                     {},
-                    {
-                        headers: {
-                            Authorization: `Bearer ${refreshToken}`
-                        }
-                    }
+                    { headers: { Authorization: `Bearer ${refreshToken}` } }
                 );
 
-                const newAccess = res.data.accessToken;
-                const newRefresh = res.data.refreshToken;
-
-                setTokens(newAccess, newRefresh);
-                originalRequest.headers.Authorization = `Bearer ${newAccess}`;
-                processQueue(null, newAccess);
+                const { accessToken, refreshToken: newRefresh } = res.data;
+                setTokens(accessToken, newRefresh);
+                originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+                processQueue(null, accessToken);
                 return api(originalRequest);
             } catch (refreshErr: any) {
-                if (
-                    refreshErr.response?.status === 403 &&
-                    refreshErr.response?.data?.message?.includes('User not found')
-                ) {
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('refreshToken');
-                    useAuthStore.getState().logout?.();
-                    window.location.reload();
+                if (refreshErr.response?.status === 403) {
+                    logout();
+                    window.location.href = '/';
                 }
                 processQueue(refreshErr, null);
                 return Promise.reject(refreshErr);
