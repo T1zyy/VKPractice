@@ -27,7 +27,7 @@ public class AuthController {
         Optional<UserEntity> existingUserOpt = userService.findUserById(profile.getId());
         if (existingUserOpt.isEmpty()) {
             System.out.print("[Auth Controller log]: ");
-            System.out.print(profile.getId());
+            System.out.println(profile.getSex());
             userService.saveUser(profile);
         }
 
