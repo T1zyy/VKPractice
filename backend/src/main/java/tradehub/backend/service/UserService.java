@@ -38,12 +38,4 @@ public class UserService {
     public void saveUser(UserEntity user) {
         userRepository.save(user);
     }
-
-    public boolean hasProfileChanged(UserEntity existing, UserEntity incoming) {
-        return !Objects.equals(existing.getFirstName(), incoming.getFirstName()) ||
-                !Objects.equals(existing.getLastName(), incoming.getLastName()) ||
-                !Objects.equals(existing.getPhotoUrl(), incoming.getPhotoUrl()) ||
-                !Objects.equals(existing.getCity(), incoming.getCity()) ||
-                !Objects.equals(existing.getSex(), incoming.getSex());
-    }
 }
