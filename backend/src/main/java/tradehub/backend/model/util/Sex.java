@@ -1,8 +1,8 @@
 package tradehub.backend.model.util;
 
 public enum Sex {
-    FEMALE(1),
-    MALE(2);
+    FEMALE(0),
+    MALE(1);
 
     private final int code;
 
