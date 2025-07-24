@@ -17,17 +17,17 @@ function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const accessToken = localStorage.getItem('accessToken');
-        const refreshToken = localStorage.getItem('refreshToken');
-        const vkUserId = localStorage.getItem('vkUserId');
+        const accessTokenFromStorage = localStorage.getItem('accessToken');
+        const refreshTokenFromStorage = localStorage.getItem('refreshToken');
+        const vkUserIdFromStorage = localStorage.getItem('vkUserId');
 
-        if (accessToken && refreshToken && vkUserId) {
-            setAuth(accessToken, refreshToken, parseInt(vkUserId));
-        } else {
+        if (!accessTokenFromStorage || !refreshTokenFromStorage || !vkUserIdFromStorage) {
             navigate('/welcome');
+            return;
         }
-    }, [setAuth, navigate]);
 
+        setAuth(accessTokenFromStorage, refreshTokenFromStorage, +vkUserIdFromStorage);
+    }, []);
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar />
