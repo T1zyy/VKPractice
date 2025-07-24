@@ -7,6 +7,8 @@ import tradehub.backend.entity.UserEntity;
 import tradehub.backend.model.user.UserProfile;
 import tradehub.backend.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -20,6 +22,10 @@ public class UserService {
 
     public UserEntity getUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public Optional<UserEntity> findUserById(long userId) {
+        return userRepository.findById(userId);
     }
 
     public void saveUser(UserEntity userEntity) {

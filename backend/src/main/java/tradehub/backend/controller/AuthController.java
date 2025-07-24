@@ -4,10 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tradehub.backend.entity.UserEntity;
+import tradehub.backend.model.user.UserProfile;
 import tradehub.backend.service.JwtService;
 import tradehub.backend.service.UserService;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,10 +21,41 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody UserEntity profile) {
         String vkUserId = String.valueOf(profile.getId());
-
         if (vkUserId == null) return ResponseEntity.badRequest().build();
 
-        userService.saveUser(profile);
+        Optional<UserEntity> existingUserOpt = userService.findUserById(profile.getId());
+        if (existingUserOpt.isEmpty()) {
+            userService.saveUser(profile);
+        } else {
+            UserEntity existingUser = existingUserOpt.get();
+
+            boolean isChanged = false;
+
+            if (!existingUser.getFirstName().equals(profile.getFirstName())) {
+                existingUser.setFirstName(profile.getFirstName());
+                isChanged = true;
+            }
+            if (!existingUser.getLastName().equals(profile.getLastName())) {
+                existingUser.setLastName(profile.getLastName());
+                isChanged = true;
+            }
+            if (!existingUser.getPhotoUrl().equals(profile.getPhotoUrl())) {
+                existingUser.setPhotoUrl(profile.getPhotoUrl());
+                isChanged = true;
+            }
+            if (!existingUser.getCity().equals(profile.getCity())) {
+                existingUser.setCity(profile.getCity());
+                isChanged = true;
+            }
+            if (!existingUser.getSex().equals(profile.getSex())) {
+                existingUser.setSex(profile.getSex());
+                isChanged = true;
+            }
+
+            if (isChanged) {
+                userService.saveUser(existingUser);
+            }
+        }
 
         String accessToken = jwtService.generateToken(vkUserId);
         String refreshToken = jwtService.generateRefreshToken(vkUserId);
@@ -32,7 +65,6 @@ public class AuthController {
                 "refreshToken", refreshToken
         ));
     }
-
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(@RequestHeader("Authorization") String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
