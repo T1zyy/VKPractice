@@ -10,6 +10,7 @@ import AdvertisementPage from './pages/AdvertisementPage';
 import BalancePage from './pages/BalancePage';
 import LoginChoicePage from "./pages/LoginChoisePage";
 import AuthInitializer from "./api/AuthInitializer";
+import "./index.css"
 
 
 function App() {
