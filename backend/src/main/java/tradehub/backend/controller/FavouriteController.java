@@ -14,7 +14,7 @@ public class FavouriteController {
     private final FavouriteService favouriteService;
 
     @GetMapping("/{userId}")
-    public Page<ShowFavouriteAdvertisement> getFavourites(@PathVariable Long userId, @RequestParam Integer page) {
+    public Page<ShowFavouriteAdvertisement> getFavourites(@PathVariable long userId, @RequestParam Integer page) {
         return favouriteService.getFavouritesBuUserId(userId, page);
     }
 

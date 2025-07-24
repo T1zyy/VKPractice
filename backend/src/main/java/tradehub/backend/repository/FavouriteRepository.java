@@ -8,5 +8,5 @@ import tradehub.backend.entity.Favourite;
 
 @Repository
 public interface FavouriteRepository extends JpaRepository<Favourite, Long> {
-    Page<Favourite> getFavouritesByUserId(Long userId, Pageable pageable);
+    Page<Favourite> getFavouritesByUserId(long userId, Pageable pageable);
 }

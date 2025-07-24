@@ -19,7 +19,7 @@ public class UserController {
     private final AdvertisementService advertisementService;
 
     @GetMapping("/profile/{userId}")
-    public UserProfile getUserProfile(@PathVariable Long userId) {
+    public UserProfile getUserProfile(@PathVariable long userId) {
         return userService.getUserProfileByUserId(userId);
     }
 
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public UserEntity getUser(@PathVariable Long userId) {
+    public UserEntity getUser(@PathVariable long userId) {
         return userService.getUserById(userId);
     }
 }

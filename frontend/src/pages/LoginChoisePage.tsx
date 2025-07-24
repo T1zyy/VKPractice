@@ -23,6 +23,8 @@ export default function LoginChoicePage() {
                 createdAt: new Date().toISOString(),
             };
 
+            console.log(profileData);
+
             const res = await fetch('https://vkpractice-production.up.railway.app/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

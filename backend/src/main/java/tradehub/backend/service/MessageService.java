@@ -35,7 +35,7 @@ public class MessageService {
     }
 
     @Transactional
-    public void markMessagesAsRead(Long chatId, Long readerId) {
+    public void markMessagesAsRead(long chatId, long readerId) {
         List<Message> unreadMessages = messageRepository.findUnreadMessages(chatId, readerId);
 
         for (Message message : unreadMessages) {

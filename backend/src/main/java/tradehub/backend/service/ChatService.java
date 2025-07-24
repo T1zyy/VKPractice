@@ -14,7 +14,7 @@ import java.util.List;
 public class ChatService {
     private final ChatRepository chatRepository;
 
-    public List<Chat> getChatsForUser(Long userId) {
+    public List<Chat> getChatsForUser(long userId) {
         return chatRepository.findChatsSorted(userId);
     }
 
@@ -26,7 +26,7 @@ public class ChatService {
                 });
     }
 
-    public void updateLastMessage(Long chatId, String lastMessage, LocalDateTime time) {
+    public void updateLastMessage(long chatId, String lastMessage, LocalDateTime time) {
         chatRepository.findById(chatId).ifPresent(chat -> {
             chat.setLastMessage(lastMessage);
             chat.setLastMessageTime(time);

@@ -19,4 +19,4 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     WHERE (c.firstUserId = :user1 AND c.secondUserId = :user2)
        OR (c.firstUserId = :user2 AND c.secondUserId = :user1)
 """)
-    Optional<Chat> findChatBetweenUsers(@Param("user1") Long user1, @Param("user2") Long user2);}
+    Optional<Chat> findChatBetweenUsers(@Param("user1") long user1, @Param("user2") long user2);}

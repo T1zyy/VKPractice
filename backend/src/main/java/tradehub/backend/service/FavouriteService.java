@@ -20,7 +20,7 @@ public class FavouriteService {
     private final AdvertisementService advertisementService;
     private final Mapper mapper;
 
-    public Page<ShowFavouriteAdvertisement> getFavouritesBuUserId(Long userId, Integer page) {
+    public Page<ShowFavouriteAdvertisement> getFavouritesBuUserId(long userId, int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         Page<Favourite> favourites = favouriteRepository.getFavouritesByUserId(userId, pageable);
         return favourites.map(favourite -> {

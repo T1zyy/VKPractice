@@ -44,7 +44,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing or invalid Authorization header");
         }
 
-        String refreshToken = authHeader.substring(7); // обрезаем "Bearer "
+        String refreshToken = authHeader.substring(7);
 
         if (!jwtService.isTokenValid(refreshToken)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");

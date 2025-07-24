@@ -16,5 +16,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     Page<Message> findAll(Specification<Message> specification, Pageable pageable);
 
     @Query("SELECT m FROM Message m WHERE m.chatId = :chatId AND m.recipientId = :recipientId AND m.read = false")
-    List<Message> findUnreadMessages(@Param("chatId") Long chatId, @Param("recipientId") Long recipientId);
+    List<Message> findUnreadMessages(@Param("chatId") long chatId, @Param("recipientId") long recipientId);
 }

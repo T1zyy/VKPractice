@@ -43,17 +43,17 @@ public class AdvertisementService {
         return mapper.advertisementToShowLentAdvertisement(advertisement);
     }
 
-    public ShowLentAdvertisement getAdvertisementByIdListed(Long advertisementId) {
+    public ShowLentAdvertisement getAdvertisementByIdListed(long advertisementId) {
         Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(() -> new RuntimeException("Advertisement with id " + advertisementId + " not found"));
         return mapper.advertisementToShowLentAdvertisement(advertisement);
     }
 
-    public ShowPageAdvertisement getAdvertisementByIdPaged(Long advertisementId) {
+    public ShowPageAdvertisement getAdvertisementByIdPaged(long advertisementId) {
         Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(() -> new RuntimeException("Advertisement with id " + advertisementId + " not found"));
         return mapper.advertisementToShowPageAdvertisement(advertisement);
     }
 
-    public List<ShowLentAdvertisement> getAdvertisementsByUserId(Long userId) {
+    public List<ShowLentAdvertisement> getAdvertisementsByUserId(long userId) {
         List<Advertisement> advertisements = advertisementRepository.findAllByUserId(userId);
         return advertisements.stream().map(mapper::advertisementToShowLentAdvertisement).toList();
     }
