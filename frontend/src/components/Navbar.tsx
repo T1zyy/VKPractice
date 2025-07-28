@@ -17,7 +17,7 @@ export default function Navbar() {
                 </Link>
 
                 <Link
-                    to="/" className="text-gray-700 hover:text-green-700">Объявления
+                    to="/search" className="text-gray-700 hover:text-green-700">Объявления
                 </Link>
 
                 <div className="flex gap-4 items-center">
