@@ -5,10 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tradehub.backend.entity.UserEntity;
 import tradehub.backend.model.user.CreateUser;
-import tradehub.backend.model.user.UserProfile;
 import tradehub.backend.service.JwtService;
 import tradehub.backend.service.UserService;
-
+import org.springframework.web.bind.annotation.RequestHeader;
 import java.util.Map;
 import java.util.Optional;
 
