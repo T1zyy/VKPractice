@@ -10,6 +10,7 @@ export interface SearchResponse {
     _embedded?: {
         showAdvertisementList: AdvertisementList[];
     };
+
     page?: {
         size: number;
         totalElements: number;
@@ -17,6 +18,13 @@ export interface SearchResponse {
         number: number;
     };
     _links?: any;
+}
+
+export interface User {
+    id: number;
+    firstName: string;
+    lastName: string;
+    photoUrl: string;
 }
 
 export interface PageAdvertisement {
