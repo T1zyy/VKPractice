@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Relation(collectionRelation = "showAdvertisementList")
 public class ShowPageAdvertisement {
+    private Long userId;
     private String title;
     private String description;
     private BigDecimal price;

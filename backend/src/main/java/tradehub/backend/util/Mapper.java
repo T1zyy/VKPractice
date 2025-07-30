@@ -30,6 +30,7 @@ public class Mapper {
     }
     public ShowPageAdvertisement advertisementToShowPageAdvertisement(Advertisement advertisement) {
         return new ShowPageAdvertisement(
+                advertisement.getUserId(),
                 advertisement.getTitle(),
                 advertisement.getDescription(),
                 advertisement.getPrice(),
