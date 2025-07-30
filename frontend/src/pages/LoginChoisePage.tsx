@@ -21,8 +21,6 @@ export default function LoginChoicePage() {
                 photoUrl: userInfo.photo_200 || ''
             };
 
-            console.log(profileData);
-
             const res = await fetch('https://vkpractice-production.up.railway.app/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

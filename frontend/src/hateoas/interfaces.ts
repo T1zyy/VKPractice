@@ -29,6 +29,7 @@ export interface User {
 
 export interface PageAdvertisement {
     id: number;
+    userId: number;
     title: string;
     description: string;
     price: number;

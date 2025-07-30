@@ -22,7 +22,7 @@ export default function BalancePage() {
             });
 
             alert(`Баланс пополнен на ${value} ₽`);
-            navigate('/');
+            navigate('/search');
         } catch (err) {
             console.error('Ошибка пополнения:', err);
             alert('Ошибка при пополнении баланса');
