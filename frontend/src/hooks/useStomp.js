@@ -1,4 +1,3 @@
-// hooks/useStomp.js
 import { useEffect, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';

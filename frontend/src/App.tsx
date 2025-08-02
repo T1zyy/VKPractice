@@ -1,22 +1,27 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import AdvertisementCreate from './pages/AdvertisementCreate';
 import Chat from './pages/Chat';
-import { ToastContainer } from 'react-toastify';
 import AdvertisementPage from './pages/AdvertisementPage';
 import BalancePage from './pages/BalancePage';
-import LoginChoicePage from "./pages/LoginChoisePage";
-import AuthInitializer from "./api/AuthInitializer";
-import "./index.css"
-
+import LoginChoicePage from './pages/LoginChoisePage';
+import AuthInitializer from './api/AuthInitializer';
+import { ToastContainer } from 'react-toastify';
+import './index.css';
 
 function App() {
+    const [ready, setReady] = useState(false);
+
+    if (!ready) {
+        return <AuthInitializer onReady={() => setReady(true)} />;
+    }
+
     return (
         <div className="min-h-screen bg-gray-50">
-            <AuthInitializer />
             <Navbar />
             <Routes>
                 <Route path="/search" element={<Search />} />
@@ -32,4 +37,5 @@ function App() {
         </div>
     );
 }
+
 export default App;
