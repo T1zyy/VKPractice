@@ -105,8 +105,8 @@ export default function AdvertisementCreate() {
             <form onSubmit={handleSubmit} className="grid gap-5">
                 <input name="title" placeholder="Заголовок" onChange={handleChange} value={form.title} className="border p-3 rounded w-full" />
                 <textarea name="description" placeholder="Описание" onChange={handleChange} value={form.description} className="border p-3 rounded w-full h-28" />
-                <input name="price" type="number" step="0.01" placeholder="Цена (₽)" onChange={handleChange} value={form.price} className="border p-3 rounded w-full" />
-                <input name="weight" type="number" step="0.01" placeholder="Вес (кг)" onChange={handleChange} value={form.weight} className="border p-3 rounded w-full" />
+                <input name="price" type="number" placeholder="Цена (₽)" onChange={handleChange} value={form.price} className="border p-3 rounded w-full" />
+                <input name="weight" type="number" placeholder="Вес (кг)" onChange={handleChange} value={form.weight} className="border p-3 rounded w-full" />
                 <input name="address" placeholder="Адрес" onChange={handleChange} value={form.address} className="border p-3 rounded w-full" />
 
                 <select
