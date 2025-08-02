@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import { PageAdvertisement, User } from "../hateoas/interfaces";
+import { useAuthStore } from '../store/authStore';
 
 export default function AdvertisementPage() {
     const { advertisementId } = useParams();
     const [ad, setAd] = useState<PageAdvertisement | null>(null);
     const [seller, setSeller] = useState<User | null>(null);
     const navigate = useNavigate();
+    const { accessToken } = useAuthStore();
 
     useEffect(() => {
+        if (!advertisementId) return;
+
         api.get(`/advertisement/${advertisementId}`)
             .then(res => {
                 setAd(res.data);
@@ -24,6 +28,27 @@ export default function AdvertisementPage() {
     }, [advertisementId]);
 
     if (!ad || !seller) return <p className="p-6 text-lg">Загрузка объявления...</p>;
+
+    const handleStartChat = async () => {
+        try {
+            const res = await api.post('/chat', {
+                secondUserId: seller.id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+
+            const chat = res.data;
+            if (chat?.id) {
+                navigate(`/chat/${chat.id}`);
+            } else {
+                console.error('Чат не создан или не пришёл chat.id');
+            }
+        } catch (err) {
+            console.error('Ошибка при создании чата:', err);
+        }
+    };
 
     return (
         <div className="max-w-5xl mx-auto p-6 flex gap-6">
@@ -51,15 +76,7 @@ export default function AdvertisementPage() {
                 </div>
 
                 <button
-                    onClick={async () => {
-                        try {
-                            const res = await api.post('/chat', seller.id);
-                            const chat = res.data;
-                            navigate(`/chat/${chat.id}`);
-                        } catch (err) {
-                            console.error('Ошибка при создании чата:', err);
-                        }
-                    }}
+                    onClick={handleStartChat}
                     className="mt-6 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-lg self-end"
                 >
                     Написать продавцу
