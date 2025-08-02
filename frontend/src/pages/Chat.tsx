@@ -1,13 +1,16 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, ChangeEvent } from 'react';
 import useStomp from '../hooks/useStomp';
+import { useAuthStore } from '../store/authStore';
+import api from '../api/axios';
 
 interface Message {
     chatId: number;
     text: string;
     senderId: number;
     recipientId: number;
-    [key: string]: any;
+    createdAt?: string;
+    read?: boolean;
 }
 
 interface TypingMessage {
@@ -18,46 +21,60 @@ interface TypingMessage {
 
 export default function Chat() {
     const { chatId } = useParams<{ chatId: string }>();
+    const { userId } = useAuthStore(); // 💡 текущий пользователь
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
     const [typingUsers, setTypingUsers] = useState<number[]>([]);
-
-    const handleReceive = (msg: Message) => {
-        setMessages(prev => [...prev, msg]);
-    };
-
-    const handleTyping = (msg: TypingMessage) => {
-        if (msg.senderId !== 1) {
-            setTypingUsers([msg.senderId]);
-            setTimeout(() => setTypingUsers([]), 3000);
-        }
-    };
+    const [recipientId, setRecipientId] = useState<number | null>(null); // 👈
 
     const sendMessage = useStomp(handleReceive, chatId || '');
     const sendTyping = useStomp(() => {}, `${chatId}/typing`);
 
+    function handleReceive(msg: Message) {
+        setMessages(prev => [...prev, msg]);
+    }
+
+    function handleTyping(msg: TypingMessage) {
+        if (msg.senderId !== userId) {
+            setTypingUsers([msg.senderId]);
+            setTimeout(() => setTypingUsers([]), 3000);
+        }
+    }
+
     useEffect(() => {
         if (!chatId) return;
-        fetch(`/chat/${chatId}?page=0`)
-            .then(res => res.json())
-            .then(data => setMessages(data.content || []));
-    }, [chatId]);
+
+        api.get(`/chat/${chatId}?page=0`)
+            .then(res => {
+                const msgs: Message[] = res.data.content || [];
+                setMessages(msgs);
+                const other = msgs.find(m => m.senderId !== userId);
+                if (other) setRecipientId(other.senderId);
+            })
+            .catch(err => console.error('Ошибка загрузки сообщений:', err));
+    }, [chatId, userId]);
 
     const handleSend = () => {
-        if (!chatId) return;
+        if (!chatId || !recipientId || !input.trim()) return;
+
         sendMessage({
             chatId: parseInt(chatId),
             text: input,
-            senderId: 1,
-            recipientId: 2,
+            senderId: userId,
+            recipientId: recipientId,
         });
+
         setInput('');
     };
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
         if (chatId) {
-            sendTyping({ chatId: parseInt(chatId), senderId: 1, typing: true });
+            sendTyping({
+                chatId: parseInt(chatId),
+                senderId: userId,
+                typing: true
+            });
         }
     };
 
@@ -65,7 +82,10 @@ export default function Chat() {
         <div className="p-4">
             <div className="mb-4 max-h-[400px] overflow-y-auto">
                 {messages.map((msg, idx) => (
-                    <div key={idx} className="p-2 bg-gray-100 mb-2 rounded">
+                    <div
+                        key={idx}
+                        className={`p-2 mb-2 rounded ${msg.senderId === userId ? 'bg-green-100 text-right' : 'bg-gray-100 text-left'}`}
+                    >
                         {msg.text}
                     </div>
                 ))}

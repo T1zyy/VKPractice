@@ -34,9 +34,8 @@ public class ChatController {
     }
 
     @PostMapping("/chat")
-    public Page<ChatMessage> createChat(@Valid @RequestBody CreateChat chat, Authentication auth) {
-        long secondUserId = chat.getSecondUserId();
-        chatService.findOrCreateChat(chat);
-        return getChat(secondUserId, 0, auth);
+    public Chat createChat(@Valid @RequestBody long secondUserId, Authentication auth) {
+        long firstUserId = Long.parseLong((String) auth.getPrincipal());
+        return chatService.findOrCreateChat(firstUserId, secondUserId);
     }
 }

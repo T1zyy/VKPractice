@@ -53,24 +53,9 @@ export default function AdvertisementPage() {
                 <button
                     onClick={async () => {
                         try {
-                            const userId = localStorage.getItem('userId');
-                            if (!userId) {
-                                alert('Вы должны войти, чтобы начать чат');
-                                return;
-                            }
-
-                            const res = await api.post('/chat', {
-                                firstUserId: +userId,
-                                secondUserId: seller.id,
-                            });
-
-                            const messages = res.data;
-                            if (messages.length > 0 && messages[0].chatId) {
-                                const chatId = messages[0].chatId;
-                                navigate(`/chat/${chatId}`);
-                            } else {
-                                alert('Ошибка: не удалось получить chatId');
-                            }
+                            const res = await api.post('/chat', seller.id);
+                            const chat = res.data;
+                            navigate(`/chat/${chat.id}`);
                         } catch (err) {
                             console.error('Ошибка при создании чата:', err);
                         }

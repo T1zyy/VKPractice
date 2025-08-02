@@ -18,11 +18,11 @@ public class ChatService {
         return chatRepository.findChatsSorted(userId);
     }
 
-    public void findOrCreateChat(CreateChat chat) {
-        chatRepository.findChatBetweenUsers(chat.getFirstUserId(), chat.getSecondUserId())
+    public Chat findOrCreateChat(long firstUserId, long secondUserId) {
+        return chatRepository.findChatBetweenUsers(firstUserId, secondUserId)
                 .orElseGet(() -> {
-                    Chat temp = new Chat(chat.getFirstUserId(), chat.getSecondUserId());
-                    return chatRepository.save(temp);
+                    Chat newChat = new Chat(firstUserId, secondUserId);
+                    return chatRepository.save(newChat);
                 });
     }
 
