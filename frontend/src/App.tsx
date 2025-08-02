@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 
 import Search from './pages/Search';
@@ -15,6 +15,16 @@ import './index.css';
 
 function App() {
     const [ready, setReady] = useState(false);
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+        const userId = localStorage.getItem('userId');
+
+        if (accessToken && refreshToken && userId) {
+            setReady(true);
+        }
+    }, []);
 
     if (!ready) {
         return <AuthInitializer onReady={() => setReady(true)} />;

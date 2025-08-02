@@ -51,7 +51,30 @@ export default function AdvertisementPage() {
                 </div>
 
                 <button
-                    onClick={() => navigate(`/chat/new?to=${seller.id}`)}
+                    onClick={async () => {
+                        try {
+                            const userId = localStorage.getItem('userId');
+                            if (!userId) {
+                                alert('Вы должны войти, чтобы начать чат');
+                                return;
+                            }
+
+                            const res = await api.post('/chat', {
+                                firstUserId: +userId,
+                                secondUserId: seller.id,
+                            });
+
+                            const messages = res.data;
+                            if (messages.length > 0 && messages[0].chatId) {
+                                const chatId = messages[0].chatId;
+                                navigate(`/chat/${chatId}`);
+                            } else {
+                                alert('Ошибка: не удалось получить chatId');
+                            }
+                        } catch (err) {
+                            console.error('Ошибка при создании чата:', err);
+                        }
+                    }}
                     className="mt-6 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-lg self-end"
                 >
                     Написать продавцу

@@ -7,8 +7,8 @@ export default function useStomp(onMessage: (msg: any) => void, topic: string) {
 
     useEffect(() => {
         const socket = new SockJS('https://vkpractice-production.up.railway.app/ws');
-        const client = Stomp.over(socket); // возвращает CompatClient
-        client.debug = () => {}; // отключение логов
+        const client = Stomp.over(() => new SockJS('https://vkpractice-production.up.railway.app/ws'));
+        client.debug = () => {};
 
         client.connect({}, () => {
             client.subscribe(`/topic/${topic}`, (message: IMessage) => {
