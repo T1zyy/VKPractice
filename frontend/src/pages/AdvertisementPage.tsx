@@ -33,6 +33,7 @@ export default function AdvertisementPage() {
         try {
             const res = await api.post('/chat', seller.id, {
                 headers: {
+                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`
                 }
             });
