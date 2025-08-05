@@ -21,7 +21,7 @@ interface TypingMessage {
 
 export default function Chat() {
     const { chatId } = useParams<{ chatId: string }>();
-    const { userId } = useAuthStore(); // 💡 текущий пользователь
+    const { userId } = useAuthStore();
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
     const [typingUsers, setTypingUsers] = useState<number[]>([]);

@@ -31,9 +31,7 @@ export default function AdvertisementPage() {
 
     const handleStartChat = async () => {
         try {
-            const res = await api.post('/chat', {
-                secondUserId: seller.id
-            }, {
+            const res = await api.post('/chat', seller.id, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
