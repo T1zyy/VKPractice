@@ -30,7 +30,7 @@ public class Chat {
     public Chat(Long firstUserId, Long secondUserId) {
         this.firstUserId = firstUserId;
         this.secondUserId = secondUserId;
-        this.lastMessageTime = null;
-        this.lastMessage = null;
+        this.lastMessageTime = LocalDateTime.now();
+        this.lastMessage = "";
     }
 }
