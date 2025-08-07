@@ -63,7 +63,7 @@ export default function AdvertisementPage() {
             </div>
 
             {/* Правая часть: продавец */}
-            <div className="w-1/3 flex flex-col justify-between">
+            <div className="w-1/3 flex flex-col justify-between">Продавец
                 <div
                     className="bg-white rounded-xl shadow-lg border p-4 cursor-pointer hover:bg-gray-50 transition"
                     onClick={() => navigate(`/profile/${seller.id}`)}
