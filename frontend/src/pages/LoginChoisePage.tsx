@@ -44,9 +44,6 @@ export default function LoginChoicePage() {
             <button onClick={handleLogin} className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded text-lg">
                 Войти через VK
             </button>
-            <button onClick={() => navigate('/search')} className="bg-gray-400 hover:bg-gray-500 text-white px-6 py-3 rounded text-lg">
-                Продолжить без входа
-            </button>
         </div>
     );
 }
