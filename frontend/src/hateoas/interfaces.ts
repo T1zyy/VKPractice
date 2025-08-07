@@ -35,4 +35,5 @@ export interface PageAdvertisement {
     price: number;
     weight: number;
     address: string;
+    contacts: string;
 }

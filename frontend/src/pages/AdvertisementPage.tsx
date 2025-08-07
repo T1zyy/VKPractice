@@ -57,7 +57,9 @@ export default function AdvertisementPage() {
                 <p className="text-gray-700 text-lg mb-2"><strong>Цена:</strong> {ad.price} ₽</p>
                 <p className="text-gray-700 text-lg mb-2"><strong>Вес:</strong> {ad.weight} кг</p>
                 <p className="text-gray-700 text-lg mb-4"><strong>Адрес:</strong> {ad.address}</p>
-                <p className="text-gray-600 whitespace-pre-line">{ad.description}</p>
+                <p className="text-gray-600 whitespace-pre-line"><strong>Описание:</strong>{ad.description}</p>
+                <p className="text-gray-600 whitespace-pre-line"><strong>Контакты:</strong>{ad.contacts}</p>
+
             </div>
 
             {/* Правая часть: продавец */}
