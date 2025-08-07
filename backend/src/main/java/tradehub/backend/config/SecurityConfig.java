@@ -30,7 +30,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/ws/**", "/favourites/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/profile/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/recommendations/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/advertisement/**").permitAll()

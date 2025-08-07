@@ -7,7 +7,6 @@ import Profile from './pages/Profile';
 import AdvertisementCreate from './pages/AdvertisementCreate';
 import Chat from './pages/Chat';
 import AdvertisementPage from './pages/AdvertisementPage';
-import BalancePage from './pages/BalancePage';
 import LoginChoicePage from './pages/LoginChoisePage';
 import AuthInitializer from './api/AuthInitializer';
 import { ToastContainer } from 'react-toastify';
@@ -29,7 +28,6 @@ function App() {
                 <Route path="/create" element={<AdvertisementCreate />} />
                 <Route path="/chat/:chatId" element={<Chat />} />
                 <Route path="/advertisement/:advertisementId" element={<AdvertisementPage />} />
-                <Route path="/balance" element={<BalancePage />} />
                 <Route path="/" element={<LoginChoicePage />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>

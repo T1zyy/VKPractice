@@ -1,6 +1,5 @@
 import { useAuthStore } from '../store/authStore';
 import { Link } from 'react-router-dom';
-import Balance from "../components/Balance";
 
 export default function Navbar() {
     const { userId } = useAuthStore();
@@ -21,7 +20,6 @@ export default function Navbar() {
                 </Link>
 
                 <div className="flex gap-4 items-center">
-                    <Balance />
                     {userId && (
                         <Link
                             to={`/profile/${userId}`}

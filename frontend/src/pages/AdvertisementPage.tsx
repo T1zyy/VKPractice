@@ -73,13 +73,6 @@ export default function AdvertisementPage() {
                     />
                     <p className="text-center text-xl font-semibold">{seller.firstName} {seller.lastName}</p>
                 </div>
-
-                <button
-                    onClick={handleStartChat}
-                    className="mt-6 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-lg self-end"
-                >
-                    Написать продавцу
-                </button>
             </div>
         </div>
     );
