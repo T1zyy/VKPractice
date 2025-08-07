@@ -16,6 +16,7 @@ public class ShowFavouriteAdvertisement {
     private BigDecimal price;
     private Float weight;
     private String address;
+    private String contacts;
 
     public ShowFavouriteAdvertisement(ShowLentAdvertisement showAdvertisement, Long favouriteId) {
         this.favouriteId = favouriteId;

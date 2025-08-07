@@ -35,7 +35,8 @@ public class Mapper {
                 advertisement.getDescription(),
                 advertisement.getPrice(),
                 advertisement.getWeight(),
-                advertisement.getAddress()
+                advertisement.getAddress(),
+                advertisement.getContacts()
         );
     }
 

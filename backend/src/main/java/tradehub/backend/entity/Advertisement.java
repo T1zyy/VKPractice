@@ -45,6 +45,8 @@ public class Advertisement {
     private Integer likes;
     @Column(nullable = false)
     private Category category;
+    @Column(nullable = false)
+    private String contacts;
 
     public Advertisement(CreateAdvertisement createAdvertisement, Long userId) {
         this.userId = userId;
@@ -59,5 +61,6 @@ public class Advertisement {
         this.updatedAt = LocalDateTime.now();
         this.category = createAdvertisement.getCategory();
         this.available = false;
+        this.contacts = createAdvertisement.getContacts();
     }
 }

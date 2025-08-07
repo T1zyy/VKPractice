@@ -39,10 +39,11 @@ export default function AdvertisementCreate() {
     const [form, setForm] = useState({
         title: '',
         description: '',
-        price: '',      // пустая строка вместо 0
-        weight: '',     // пустая строка вместо 0
+        price: '',
+        weight: '',
         address: '',
         category: 'OTHERS',
+        contacts: '',
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -99,7 +100,6 @@ export default function AdvertisementCreate() {
                 <input name="price" type="number" inputMode="decimal" placeholder="Цена (₽)" onChange={handleChange} value={form.price} className="border p-3 rounded w-full" />
                 <input name="weight" type="number" inputMode="decimal" placeholder="Вес (кг)" onChange={handleChange} value={form.weight} className="border p-3 rounded w-full" />
                 <input name="address" placeholder="Адрес" onChange={handleChange} value={form.address} className="border p-3 rounded w-full" />
-
                 <select
                     name="category"
                     value={form.category}
@@ -110,7 +110,7 @@ export default function AdvertisementCreate() {
                         <option key={cat.value} value={cat.value}>{cat.label}</option>
                     ))}
                 </select>
-
+                <textarea name="contacts" placeholder="Контакты" onChange={handleChange} value={form.contacts} className="border p-3 rounded w-full h-28" />
                 <button
                     type="submit"
                     disabled={submitting}

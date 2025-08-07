@@ -17,4 +17,5 @@ public class CreateAdvertisement {
     private String address;
     private Float weight;
     private Category category;
+    private String contacts;
 }

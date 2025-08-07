@@ -18,4 +18,5 @@ public class ShowPageAdvertisement {
     private BigDecimal price;
     private Float weight;
     private String address;
+    private String contacts;
 }

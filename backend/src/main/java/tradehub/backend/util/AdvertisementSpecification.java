@@ -8,7 +8,7 @@ public class AdvertisementSpecification {
     public static Specification<Advertisement> hasKeyword(String keyword) {
         return (root, query, cb) -> {
             if (keyword == null || keyword.trim().isEmpty()) {
-                return cb.conjunction(); // не фильтруем
+                return cb.conjunction();
             }
             String pattern = "%" + keyword.trim().toLowerCase() + "%";
             return cb.or(
